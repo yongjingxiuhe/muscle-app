@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>筋トレ管理＆成長トラッカー v3</title>
+<title>筋トレ管理＆成長トラッカー v4</title>
 <style>
   :root {
     --bg: #0b132b;
@@ -980,6 +980,182 @@
     font-weight: 700;
   }
   .toggle-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+
+  /* v4: 複数部位・複数種目選択 / コンボおすすめ / 内訳バッジ / 並び替え */
+  .part-pills-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .part-pills-hint {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .part-breakdown-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 9px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(58, 80, 107, 0.65);
+  }
+  .part-bd-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .multi-ex-list {
+    max-height: 290px;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: var(--bg);
+    padding: 6px;
+    margin-bottom: 10px;
+  }
+  .multi-ex-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 9px;
+    border-radius: 9px;
+    background: var(--surface-2);
+    border: 1px solid transparent;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .multi-ex-row:last-child { margin-bottom: 0; }
+  .multi-ex-row.checked {
+    background: rgba(2, 132, 199, 0.22);
+    border-color: var(--accent);
+  }
+  .multi-ex-row input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent);
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .multi-ex-info { flex: 1; min-width: 0; }
+  .multi-ex-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+  }
+  .multi-ex-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .multi-summary-bar {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.16), rgba(2, 132, 199, 0.16));
+    border: 1px solid rgba(56, 189, 248, 0.5);
+    border-radius: 10px;
+    padding: 9px 11px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .combo-chip-bar {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+    scrollbar-width: thin;
+  }
+  .combo-chip {
+    flex-shrink: 0;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 11px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .combo-chip.active {
+    background: linear-gradient(135deg, #ca8a04, #eab308);
+    color: #0b132b;
+    border-color: var(--gold);
+  }
+  .combo-box {
+    background: var(--surface-2);
+    border: 1px solid rgba(250, 204, 21, 0.45);
+    border-radius: 12px;
+    padding: 11px 12px;
+  }
+  .combo-title {
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--gold);
+    margin-bottom: 3px;
+  }
+  .combo-desc {
+    font-size: 11px;
+    color: #cbd5e1;
+    margin-bottom: 9px;
+    line-height: 1.45;
+  }
+  .mini-toggle-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 9px;
+  }
+  .mini-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #e2e8f0;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 8px;
+    cursor: pointer;
+  }
+  .mini-toggle input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: var(--accent);
+    margin: 0;
+  }
+  .entry-move-btn {
+    padding: 4px 7px !important;
+    font-size: 11px !important;
+    min-width: 26px;
+  }
+  .entry-move-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
 </style>
 </head>
 <body>
@@ -987,7 +1163,7 @@
 <!-- Sticky Header -->
 <header>
   <div class="header-top">
-    <h1>💪 筋トレ管理＆成長トラッカー v3</h1>
+    <h1>💪 筋トレ管理＆成長トラッカー v4</h1>
     <div class="header-right">
       <button class="undo-btn" id="btnUndo" disabled title="直前の操作を元に戻す">↩ 戻す</button>
       <div class="header-mini-badge bw" id="headerBwBadge" title="最新の体重">75.0kg</div>
@@ -1046,13 +1222,24 @@
         <button class="seg-btn hypertrophy active" data-goal="hypertrophy">🔥 筋肥大 (8〜12回)</button>
         <button class="seg-btn strength" data-goal="strength">⚡ 筋力強化 (4〜6回)</button>
       </div>
+      <div class="part-breakdown-bar" id="todayPartBreakdown" style="display:none;"></div>
     </div>
 
-    <!-- 種目選択＆RPE連動自動おすすめ -->
+    <!-- 種目選択＆RPE連動自動おすすめ（v4: 複数部位・複数種目対応） -->
     <div class="card-box">
-      <h2>種目選択＆自動おすすめセット</h2>
+      <h2>
+        <span>種目選択＆自動おすすめセット</span>
+        <span class="meta-badge" id="selectedPartsCountBadge">1部位選択中</span>
+      </h2>
 
-      <!-- 6部位フィルター -->
+      <!-- 6部位フィルター（複数選択対応） -->
+      <div class="part-pills-head">
+        <span class="part-pills-hint">部位をタップで複数選択ON/OFFできます</span>
+        <div style="display:flex;gap:4px;">
+          <button class="action-btn btn-secondary btn-small" id="btnPartsAll" style="padding:3px 8px;font-size:10px;">全部位</button>
+          <button class="action-btn btn-secondary btn-small" id="btnPartsReset" style="padding:3px 8px;font-size:10px;">1部位に戻す</button>
+        </div>
+      </div>
       <div class="part-pills" id="partPills">
         <button class="part-pill active" data-part="chest">胸</button>
         <button class="part-pill" data-part="back">背中</button>
@@ -1062,55 +1249,90 @@
         <button class="part-pill" data-part="abs">腹筋</button>
       </div>
 
-      <!-- 種目セレクト + 動作説明ボタン -->
-      <div class="form-group">
-        <label class="field-label" for="selExercise">種目を選択</label>
-        <div class="ex-select-row">
-          <select id="selExercise"></select>
-          <button class="action-btn btn-secondary btn-small" id="btnShowExGuide" style="height:40px;padding:0 12px;">📖 解説</button>
-        </div>
+      <!-- 単体選択 / 複数一括選択 切替 -->
+      <div class="seg-bar" id="selModeBar">
+        <button class="seg-btn active" data-selmode="single">🎯 単体詳細追加</button>
+        <button class="seg-btn" data-selmode="multi">☑ 複数種目を一括追加</button>
       </div>
 
-      <!-- 自動おすすめボックス -->
-      <div class="recommend-box" id="recommendBox">
-        <div class="rec-top">
-          <span class="rec-title">✨ 自動おすすめ（体重＋過去記録＋RPE連動）</span>
-          <button class="action-btn btn-purple btn-small" id="btnApplyRecommend">✨ おすすめを適用</button>
+      <!-- 単体モード -->
+      <div id="singleSelectPanel">
+        <!-- 種目セレクト + 動作説明ボタン -->
+        <div class="form-group">
+          <label class="field-label" for="selExercise">種目を選択</label>
+          <div class="ex-select-row">
+            <select id="selExercise"></select>
+            <button class="action-btn btn-secondary btn-small" id="btnShowExGuide" style="height:40px;padding:0 12px;">📖 解説</button>
+          </div>
         </div>
-        <div class="rec-main" id="recMainText">-</div>
-        <div class="rec-reason" id="recReasonText">-</div>
-        <div class="rec-badge up" id="recStatusBadge" style="display:none;"></div>
+
+        <!-- 自動おすすめボックス -->
+        <div class="recommend-box" id="recommendBox">
+          <div class="rec-top">
+            <span class="rec-title">✨ 自動おすすめ（体重＋過去記録＋RPE連動）</span>
+            <button class="action-btn btn-purple btn-small" id="btnApplyRecommend">✨ おすすめを適用</button>
+          </div>
+          <div class="rec-main" id="recMainText">-</div>
+          <div class="rec-reason" id="recReasonText">-</div>
+          <div class="rec-badge up" id="recStatusBadge" style="display:none;"></div>
+        </div>
+
+        <!-- ステッパーUI -->
+        <div class="stepper-grid">
+          <div class="stepper-card">
+            <div class="stepper-lbl"><span>重量 (kg)</span><span id="bwHintBadge" style="color:var(--teal);"></span></div>
+            <div class="stepper-ctrl">
+              <button class="btn-step" id="btnWeightMinus">−2.5</button>
+              <input type="number" class="stepper-input" id="inpWeight" step="0.5" min="0" max="500" value="60">
+              <button class="btn-step" id="btnWeightPlus">＋2.5</button>
+            </div>
+          </div>
+          <div class="stepper-card">
+            <div class="stepper-lbl"><span>Rep数 (回)</span><span>目標回数</span></div>
+            <div class="stepper-ctrl">
+              <button class="btn-step" id="btnRepsMinus">−1</button>
+              <input type="number" class="stepper-input" id="inpReps" step="1" min="1" max="200" value="10">
+              <button class="btn-step" id="btnRepsPlus">＋1</button>
+            </div>
+          </div>
+          <div class="stepper-card">
+            <div class="stepper-lbl"><span>Set数</span><span>合計セット</span></div>
+            <div class="stepper-ctrl">
+              <button class="btn-step" id="btnSetsMinus">−1</button>
+              <input type="number" class="stepper-input" id="inpSets" step="1" min="1" max="20" value="3">
+              <button class="btn-step" id="btnSetsPlus">＋1</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="action-btn btn-primary" id="btnAddWorkoutEntry" style="margin-bottom:0;">＋ 今日のワークアウトに追加</button>
       </div>
 
-      <!-- ステッパーUI -->
-      <div class="stepper-grid">
-        <div class="stepper-card">
-          <div class="stepper-lbl"><span>重量 (kg)</span><span id="bwHintBadge" style="color:var(--teal);"></span></div>
-          <div class="stepper-ctrl">
-            <button class="btn-step" id="btnWeightMinus">−2.5</button>
-            <input type="number" class="stepper-input" id="inpWeight" step="0.5" min="0" max="500" value="60">
-            <button class="btn-step" id="btnWeightPlus">＋2.5</button>
-          </div>
+      <!-- 複数選択一括追加モード -->
+      <div id="multiSelectPanel" style="display:none;">
+        <div class="form-group" style="margin-bottom:8px;">
+          <input type="text" id="inpMultiSearch" placeholder="🔍 選択中部位の種目を絞り込み（種目名・器具）…">
         </div>
-        <div class="stepper-card">
-          <div class="stepper-lbl"><span>Rep数 (回)</span><span>目標回数</span></div>
-          <div class="stepper-ctrl">
-            <button class="btn-step" id="btnRepsMinus">−1</button>
-            <input type="number" class="stepper-input" id="inpReps" step="1" min="1" max="200" value="10">
-            <button class="btn-step" id="btnRepsPlus">＋1</button>
-          </div>
+        <div class="mini-toggle-row">
+          <label class="mini-toggle">
+            <input type="checkbox" id="chkMultiSortCompound" checked>
+            <span>コンパウンド優先で自動並替</span>
+          </label>
+          <label class="mini-toggle">
+            <input type="checkbox" id="chkMultiVolAdjust" checked>
+            <span>ボリューム自動調整（過負荷防止）</span>
+          </label>
         </div>
-        <div class="stepper-card">
-          <div class="stepper-lbl"><span>Set数</span><span>合計セット</span></div>
-          <div class="stepper-ctrl">
-            <button class="btn-step" id="btnSetsMinus">−1</button>
-            <input type="number" class="stepper-input" id="inpSets" step="1" min="1" max="20" value="3">
-            <button class="btn-step" id="btnSetsPlus">＋1</button>
-          </div>
+        <div class="multi-ex-list" id="multiExChecklist"></div>
+        <div class="multi-summary-bar" id="multiSummaryBar">
+          <span>選択中：0種目 / 0セット</span>
+          <span style="color:var(--gold);">目安 約0分</span>
+        </div>
+        <div class="form-row">
+          <button class="action-btn btn-secondary" id="btnClearMultiSel" style="margin-bottom:0;">選択クリア</button>
+          <button class="action-btn btn-primary" id="btnAddMultiExercises" style="margin-bottom:0;">＋ チェック種目を一括追加</button>
         </div>
       </div>
-
-      <button class="action-btn btn-primary" id="btnAddWorkoutEntry" style="margin-bottom:0;">＋ 今日のワークアウトに追加</button>
     </div>
 
     <!-- 今日のワークアウト一覧（RPE記録対応） -->
@@ -1152,14 +1374,46 @@
       </div>
     </div>
 
-    <!-- 未実施・おすすめ種目の提案カード -->
+    <!-- 未実施・おすすめ種目＆複数部位コンボ提案カード（v4） -->
     <div class="card-box" style="border-color: rgba(250, 204, 21, 0.45);">
       <h2>
-        <span>✨ 未実施・おすすめ種目の提案</span>
+        <span>✨ おすすめ種目 ＆ 複数部位コンボ提案</span>
         <button class="action-btn btn-secondary btn-small" id="btnRefreshDiscoverInput">🔄 別の提案</button>
       </h2>
-      <p class="note" id="discoverInputSubtitle">選択中の部位から、普段あまりやっていない効果的な種目をピックアップしています。</p>
-      <div class="discover-list" id="discoverInputList"></div>
+      <div class="seg-bar" id="discoverModeBar" style="margin-bottom:10px;">
+        <button class="seg-btn active" data-dmode="combo">🧩 複数部位コンボおすすめ</button>
+        <button class="seg-btn" data-dmode="single">✨ 単体種目おすすめ</button>
+      </div>
+
+      <!-- コンボおすすめパネル -->
+      <div id="discoverComboPanel">
+        <div class="combo-chip-bar" id="comboChipBar">
+          <button class="combo-chip active" data-combo="recovery">🔋 回復ベスト</button>
+          <button class="combo-chip" data-combo="push">🔥 プッシュ(胸+肩+三頭)</button>
+          <button class="combo-chip" data-combo="pull">💪 プル(背+二頭+肩後)</button>
+          <button class="combo-chip" data-combo="antag_cb">⚡ 胸×背中(SS)</button>
+          <button class="combo-chip" data-combo="antag_arm">⚡ 二頭×三頭(SS)</button>
+          <button class="combo-chip" data-combo="legs_abs">🦵 脚＋腹筋</button>
+          <button class="combo-chip" data-combo="sh_arm">✨ 肩＋腕</button>
+        </div>
+        <div class="mini-toggle-row">
+          <label class="mini-toggle">
+            <input type="checkbox" id="chkComboAutoSS" checked>
+            <span>拮抗筋をスーパーセット(SS)自動リンク</span>
+          </label>
+          <label class="mini-toggle">
+            <input type="checkbox" id="chkComboVolAdjust" checked>
+            <span>サブ部位セット数自動軽減</span>
+          </label>
+        </div>
+        <div class="combo-box" id="comboRecommendBox"></div>
+      </div>
+
+      <!-- 単体おすすめパネル -->
+      <div id="discoverSinglePanel" style="display:none;">
+        <p class="note" id="discoverInputSubtitle">選択中の部位から、普段あまりやっていない効果的な種目をピックアップしています。</p>
+        <div class="discover-list" id="discoverInputList"></div>
+      </div>
     </div>
 
     <!-- v3: 筋トレ結果レポート画像（PNG）出力＆共有（記録タブ下部） -->
@@ -1251,7 +1505,7 @@
     <details class="acc-card">
       <summary>
         <span>＋ 種目を手動で追加する</span>
-        <span class="part-tag arms" id="exTotalCountBadge">65種目</span>
+        <span class="part-tag arms" id="exTotalCountBadge">85種目</span>
       </summary>
       <div class="acc-body">
         <div class="form-row">
@@ -1291,6 +1545,86 @@
             </select>
           </div>
           <div class="form-group">
+            <label class="field-label" for="inpNewExTarget">狙う部位（任意）</label>
+            <input type="text" id="inpNewExTarget" placeholder="例：大胸筋上部">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="inpNewExDesc">動作ポイント・メモ（任意）</label>
+          <input type="text" id="inpNewExDesc" placeholder="例：胸を張ってゆっくり下ろす">
+        </div>
+        <button class="action-btn btn-primary" id="btnAddCustomEx" style="margin-bottom:0;">＋ 種目マスタに追加する</button>
+      </div>
+    </details>
+
+    <!-- 種目マスタ一覧 -->
+    <div class="card-box">
+      <h2>
+        <span>📚 種目マスタ一覧（解説・削除）</span>
+        <button class="action-btn btn-secondary btn-small" id="btnRestorePresets">プリセット復元</button>
+      </h2>
+      <div class="part-pills with-all" id="masterPartPills">
+        <button class="part-pill active" data-mpart="all">全て</button>
+        <button class="part-pill" data-mpart="chest">胸</button>
+        <button class="part-pill" data-mpart="back">背中</button>
+        <button class="part-pill" data-mpart="shoulders">肩</button>
+        <button class="part-pill" data-mpart="legs">足</button>
+        <button class="part-pill" data-mpart="arms">腕</button>
+        <button class="part-pill" data-mpart="abs">腹筋</button>
+      </div>
+      <div class="form-group">
+        <input type="text" id="inpMasterSearch" placeholder="🔍 種目名・器具・対象部位で検索…">
+      </div>
+      <div id="exerciseMasterList"></div>
+    </div>
+  </section>
+
+  <!-- ==================== TAB 4: リマインド ==================== -->
+  <section id="tab-remind" class="tab-panel">
+    <!-- 部位別回復ステータス -->
+    <div class="card-box">
+      <h2>🔋 部位別 回復ステータス</h2>
+      <p class="note">大筋群（胸・背中・足）は48〜72時間、小筋群（肩・腕・腹筋）は24〜48時間の回復を目安に判定します。</p>
+      <div class="recovery-grid" id="recoveryGrid"></div>
+    </div>
+
+    <!-- 次回筋トレ予定・リマインド設定 -->
+    <div class="card-box">
+      <h2>
+        <span>📅 次回筋トレ予定・リマインド設定</span>
+        <button class="action-btn btn-purple btn-small" id="btnAutoSuggestNext">✨ 自動提案</button>
+      </h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="field-label" for="inpRemDate">次回予定日</label>
+          <input type="date" id="inpRemDate">
+        </div>
+        <div class="form-group">
+          <label class="field-label" for="inpRemTime">予定時刻</label>
+          <input type="time" id="inpRemTime" value="19:00">
+        </div>
+      </div>
+      <label class="field-label">予定部位（複数選択可）</label>
+      <div class="chip-grid" id="remPartChips">
+        <div class="sel-chip" data-rpart="chest">胸</div>
+        <div class="sel-chip" data-rpart="back">背中</div>
+        <div class="sel-chip" data-rpart="shoulders">肩</div>
+        <div class="sel-chip" data-rpart="legs">足</div>
+        <div class="sel-chip" data-rpart="arms">腕</div>
+        <div class="sel-chip" data-rpart="abs">腹筋</div>
+      </div>
+      <div class="form-group">
+        <label class="field-label" for="inpRemNote">予定メモ（任意）</label>
+        <input type="text" id="inpRemNote" placeholder="例：ベンチプレス70kg挑戦！">
+      </div>
+      <button class="action-btn btn-green" id="btnSaveReminder">💾 次回リマインドを保存</button>
+      <div class="form-row">
+        <button class="action-btn btn-gold" id="btnDownloadIcs" style="margin-bottom:0;">📆 カレンダー登録 (.ics)</button>
+        <button class="action-btn btn-secondary" id="btnTestNotify" style="margin-bottom:0;">🔔 通知テスト</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== TAB 5: 体組成・分析 ==================== -->
   <section id="tab-analytics" class="tab-panel">
     <!-- v3: 体組成・身体サイズ記録＆推移グラフ -->
@@ -1554,7 +1888,8 @@
 // =========================================================================
 // 定数・6部位・RPEオプション・65種目プリセット定義
 // =========================================================================
-const STORAGE_KEY = "muscle_tracker_v3";
+const STORAGE_KEY = "muscle_tracker_v4";
+const STORAGE_KEY_V3 = "muscle_tracker_v3";
 const STORAGE_KEY_V2 = "muscle_tracker_v2";
 const MAX_UNDO = 20;
 
@@ -1633,7 +1968,7 @@ const PRESET_EXERCISES = [
   { id: "ex_pullup", name: "懸垂（チンニング）", part: "back", subTarget: "広背筋上部・大円筋", type: "コンパウンド", equipment: "自重", bw: true, bwRatio: 0.95,
     desc: "肩幅よりやや広くバーを握り、胸をバーへ近づける意識で肘を斜め下へ引き下げる。下ろすときは脱力せず、広背筋を伸ばしながらゆっくり降ろす。",
     benefit: "逆三角形の広い背中を作る王道種目。体重を支える実践的な引く力が身につく。" },
-  { id: "ex_assist_pullup", name: "アシスト懸垂（アシストチンニング）", part: "back", subTarget: "広背筋・大円筋", type: "コンパウンド", equipment: "マシン", bw: false, bwRatio: 0.45,
+  { id: "ex_assist_pullup", name: "アシスト懸垂（アシストマシン／ワイド・順手）", part: "back", subTarget: "広背筋・大円筋", type: "コンパウンド", equipment: "マシン", bw: false, bwRatio: 0.45,
     desc: "パッドに膝を乗せ、肩をすくめずに胸を張る。腕で引くのではなく、肩甲骨を下げながら肘を脇腹へ引きつける軌道で行う。",
     benefit: "自重懸垂が難しい段階でも正しいフォームとフルレンジで広背筋をしっかり効かせられる。" },
   { id: "ex_latpull", name: "ラットプルダウン", part: "back", subTarget: "広背筋全体・大円筋", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.85,
@@ -1753,7 +2088,7 @@ const PRESET_EXERCISES = [
   { id: "ex_narrow_bench", name: "ナローベンチプレス", part: "arms", subTarget: "上腕三頭筋全体・大胸筋内側", type: "コンパウンド", equipment: "バーベル", bw: false, bwRatio: 0.80,
     desc: "手幅を肩幅程度（狭め）に設定。脇を締めて肘を体側に沿わせながらみぞおち付近へバーを下ろし、上腕三頭筋の力で押し上げる。",
     benefit: "上腕三頭筋に圧倒的な高重量をかけられるコンパウンド種目。腕を太くする近道。" },
-  { id: "ex_assist_dips_tri", name: "アシストディップス（三頭狙い）", part: "arms", subTarget: "上腕三頭筋（外側頭・内側頭）", type: "コンパウンド", equipment: "マシン", bw: false, bwRatio: 0.45,
+  { id: "ex_assist_dips_tri", name: "アシストディップス（アシストマシン／三頭狙い）", part: "arms", subTarget: "上腕三頭筋（外側頭・内側頭）", type: "コンパウンド", equipment: "マシン", bw: false, bwRatio: 0.45,
     desc: "上体をなるべく垂直に保ち、脇を締めて肘を真後ろへ曲げながら下ろす。上腕三頭筋の伸びを感じたら肘を伸ばして押し上げる。",
     benefit: "上体を立てることで胸ではなく三頭筋に負荷を集中させ、安全にフルレンジで追い込める。" },
   { id: "ex_cable_pushdown", name: "ケーブルプレスダウン", part: "arms", subTarget: "上腕三頭筋（外側頭・内側頭）", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.42,
@@ -1793,7 +2128,80 @@ const PRESET_EXERCISES = [
     benefit: "くびれや引き締まった脇腹を作り、スポーツにおける回旋パワーも強化できる。" },
   { id: "ex_side_bend", name: "サイドベント", part: "abs", subTarget: "腹斜筋・腰方形筋", type: "アイソレーション", equipment: "ダンベル", bw: false, bwRatio: 0.25,
     desc: "片手にダンベルを持って真っ直ぐ立ち、ダンベル側へ上体を真横にゆっくり倒す。反対側の脇腹が伸びたら、その脇腹を縮める力で元の姿勢へ引き戻す。",
-    benefit: "負荷を調整しながら腹斜筋に強いストレッチ＆収縮刺激を与え、体幹の側屈力を高める。" }
+    benefit: "負荷を調整しながら腹斜筋に強いストレッチ＆収縮刺激を与え、体幹の側屈力を高める。" },
+  // ===== 追加種目（アシストマシン・ケーブルマシン充実：+20種目 → 計85種目） =====
+  // --- 胸（+4種目） ---
+  { id: "ex_assist_dips_chest", name: "アシストディップス（大胸筋下部狙い）", part: "chest", subTarget: "大胸筋下部・外側", type: "コンパウンド", equipment: "マシン", bw: false, bwRatio: 0.45,
+    desc: "アシストマシン（グラビトロン等）のパッドに膝を乗せ、上体を約30度前傾させる。肘を少し外に開きながら肩が肘より少し下がる位置まで深く下ろし、大胸筋下部で押し返す。",
+    benefit: "体重より軽い負荷で深い可動域と前傾フォームを安定して維持でき、大胸筋下部を安全かつ的確に追い込める。" },
+  { id: "ex_cable_chest_press", name: "ケーブルチェストプレス", part: "chest", subTarget: "大胸筋中部・内側", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.55,
+    desc: "プーリーを胸の高さにセットし、ハンドルを握って一歩前に出る（片足を前に出して安定させる）。胸を張ったまま前へ押し出し、フィニッシュで両手を近づけて強く収縮させる。",
+    benefit: "フリーウェイトでは負荷が抜けやすい押し切りポジションでも常に水平方向の張力がかかり、強烈な収縮感を得られる。" },
+  { id: "ex_inc_cable_fly", name: "インクラインケーブルフライ", part: "chest", subTarget: "大胸筋上部・鎖骨部", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.34,
+    desc: "インクラインベンチ（30度）をケーブル中央に置き、最下段プーリーのハンドルを握る。胸を張って大きく腕を開き、鎖骨の前へ向かって弧を描くように閉じ合わせる。",
+    benefit: "大胸筋上部にボトムからトップまで途切れない張力をかけられ、上部の輪郭とボリューム作りに極めて効果的。" },
+  { id: "ex_low_cable_fly", name: "ケーブルロウツーハイフライ（下部→上部）", part: "chest", subTarget: "大胸筋上部・内側", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.32,
+    desc: "プーリーを最下段にセットして一歩前に立つ。手のひらを上に向け、下から斜め上（顎〜鎖骨の高さ）へ向かってすくい上げるように両手を合わせ、1秒キープする。",
+    benefit: "ベンチを使わずに立位で大胸筋上部をピンポイントに収縮させられるため、種目間の切り替えや仕上げに最適。" },
+
+  // --- 背中（+4種目） ---
+  { id: "ex_assist_chinup_under", name: "アシスト懸垂（ナローアンダー／広背筋下部・二頭）", part: "back", subTarget: "広背筋下部・大円筋・上腕二頭筋", type: "コンパウンド", equipment: "マシン", bw: false, bwRatio: 0.48,
+    desc: "アシストマシンで肩幅程度の逆手（アンダーグリップ）またはパラレルグリップを握る。胸を張り、肘を脇腹へ真っ直ぐ引き下げて広背筋下部を強く収縮させる。",
+    benefit: "順手より可動域が大きくとれ、脇の下から腰にかけての広背筋下部をストレッチから最大収縮まで丁寧に鍛えられる。" },
+  { id: "ex_cable_lat_onearm", name: "ワンアームケーブルラットプルダウン", part: "back", subTarget: "広背筋下部・大円筋", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.42,
+    desc: "ハイプーリーにシングルハンドルを付け、片膝立ちまたはベンチに座る。体幹をわずかに引く側へ傾けながら、肘を腰骨へ向かって引き下げ、広背筋の収縮を感じる。",
+    benefit: "片側ずつ行うことで両手バーよりも肘を深く後ろへ引け、左右差の改善と広背筋下部の強烈な収縮が得られる。" },
+  { id: "ex_cable_pullover", name: "ケーブルプルオーバー（ロープ）", part: "back", subTarget: "広背筋全体・前鋸筋", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.36,
+    desc: "最上段プーリーにロープを付け、上体を45度前傾させて腕を頭上へ伸ばし広背筋を最大ストレッチ。肘を軽く曲げたまま太ももの横までロープを引き下げる。",
+    benefit: "ストレートバーよりもフィニッシュで腕を身体の後ろまで引き切れるため、広背筋の収縮感が一段と強い。" },
+  { id: "ex_cable_high_row", name: "ケーブルハイロウ（僧帽筋・広背筋上部）", part: "back", subTarget: "僧帽筋中部・菱形筋・広背筋上部", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.65,
+    desc: "プーリーを胸〜肩の高さにセットし、足を踏ん張って胸を張る。肘を外に開きすぎず脇を45度程度に保ってみぞおちへ引き寄せ、肩甲骨をしっかり寄せる。",
+    benefit: "背中の立体感と厚みを作る中背部（僧帽筋・菱形筋）に水平〜やや斜め上からダイレクトに効かせられる。" },
+
+  // --- 肩（+3種目） ---
+  { id: "ex_cable_rear_fly", name: "ケーブルリアデルトフライ", part: "shoulders", subTarget: "三角筋後部", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.16,
+    desc: "プーリーを肩の高さにセットし、ケーブルを交差させるように左右反対側のハンドル（またはボール）を握る。肩甲骨を寄せすぎず、腕を斜め後ろへ大きく開く。",
+    benefit: "ダンベルのリアレイズと異なり、腕を下ろしたスタート位置からトップまで負荷が抜けず三角筋後部に非常に効きやすい。" },
+  { id: "ex_cable_front_raise", name: "ケーブルフロントレイズ", part: "shoulders", subTarget: "三角筋前部", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.18,
+    desc: "最下段プーリーにストレートバーまたはロープを付け、ケーブルを背にして立つ。反動を使わず、目線の高さまで真っ直ぐ前へ持ち上げてゆっくり下ろす。",
+    benefit: "ボトムポジションでの張力が強く、三角筋前部の丸みとセパレーションを作るのに優秀。" },
+  { id: "ex_cable_upright_row", name: "ケーブルアップライトロウ", part: "shoulders", subTarget: "三角筋中部・僧帽筋上部", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.42,
+    desc: "最下段プーリーにストレートバーまたはロープを付け、肩幅よりやや狭く握る。肘を常に手首より高く保ちながら、鎖骨の高さまで身体に沿わせて引き上げる。",
+    benefit: "軌道が滑らかで手首や肩関節へのストレスが少なく、三角筋中部へ高レップで強いパンプを与えられる。" },
+
+  // --- 足（+3種目） ---
+  { id: "ex_cable_pull_through", name: "ケーブルプルスルー", part: "legs", subTarget: "大臀筋・ハムストリングス", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.65,
+    desc: "最下段プーリーにロープを付け、マシンに背を向けて股の間からロープを握る。膝を軽く曲げたままお尻を後ろへ突き出し（ヒップヒンジ）、お尻を締めて立ち上がる。",
+    benefit: "腰への負担を最小限に抑えながら、大臀筋とハムストリングスに強いストレッチ＆収縮負荷をかけられる。" },
+  { id: "ex_cable_kickback", name: "ケーブルグルートキックバック", part: "legs", subTarget: "大臀筋上部・下部", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.25,
+    desc: "足首にアンクルストラップを装着して最下段プーリーに接続。マシンに手を添えて上体を軽く前傾させ、膝を伸ばし気味にしたまま脚を後方へ蹴り上げる。",
+    benefit: "大臀筋を単独でピンポイントに収縮させられ、ヒップの丸みと引き締めに高い効果を発揮する。" },
+  { id: "ex_cable_goblet_squat", name: "ケーブルゴブレットスクワット", part: "legs", subTarget: "大腿四頭筋・大臀筋・体幹", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.60,
+    desc: "最下段プーリーにロープやハンドルを付け、胸の前で抱えるように持つ。斜め前からの張力に抗いながら上体を立てて深くしゃがみ、足裏全体で押し上げる。",
+    benefit: "ケーブルが前方に引く力のおかげで重心が後ろへ倒れにくく、深いスクワットフォームを習得しやすい。" },
+
+  // --- 腕（+4種目） ---
+  { id: "ex_cable_oh_tri", name: "ケーブルオーバーヘッドトライセプスエクステンション", part: "arms", subTarget: "上腕三頭筋長頭（最大ストレッチ）", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.34,
+    desc: "プーリーを最下段（または腰の高さ）にし、ロープを持ってマシンに背を向ける。肘を頭の横に固定したまま前上方へ押し出し、戻すときは頭の後ろまで深くストレッチ。",
+    benefit: "ダンベル版よりもストレッチポジションで強い負荷がかかり、三頭筋長頭の筋肥大に抜群の効果。" },
+  { id: "ex_cable_onearm_pushdown", name: "ワンアームケーブルプレスダウン", part: "arms", subTarget: "上腕三頭筋（外側頭・内側頭）", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.22,
+    desc: "ハイプーリーのシングルハンドル（またはケーブル球）を片手で握り、肘を脇腹に固定して押し下げる。フィニッシュで手のひらをやや外へ返すとさらに強く収縮する。",
+    benefit: "左右の筋力差を修正でき、上腕三頭筋の細部まで意識を集中させて追い込める。" },
+  { id: "ex_cable_hammer_curl", name: "ケーブルハンマーカール（ロープ）", part: "arms", subTarget: "上腕筋・腕橈骨筋・二頭筋長頭", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.36,
+    desc: "最下段プーリーにロープを付け、親指が上を向く縦握りで構える。肘を体側に固定したまま巻き上げ、トップでロープを左右に少し開くようにして強く収縮する。",
+    benefit: "全可動域で張力が途切れず、上腕筋と前腕を同時にパンプさせて腕全体の太さを底上げできる。" },
+  { id: "ex_cable_bayesian_curl", name: "ベイジアンケーブルカール（ストレッチ特化）", part: "arms", subTarget: "上腕二頭筋長頭", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.20,
+    desc: "最下段プーリーのシングルハンドルを握り、マシンに背を向けて一歩前に出る。腕が体幹より後ろへ引かれた最大ストレッチ状態から、肘の位置を動かさず巻き上げる。",
+    benefit: "近年の筋肥大理論でも評価が高い種目。上腕二頭筋が最も伸びた位置で最大負荷がかかるため成長効率が非常に高い。" },
+
+  // --- 腹筋（+2種目） ---
+  { id: "ex_cable_woodchop", name: "ケーブルウッドチョッパー（腹斜筋）", part: "abs", subTarget: "外腹斜筋・内腹斜筋・体幹回旋筋", type: "コンパウンド", equipment: "ケーブル", bw: false, bwRatio: 0.32,
+    desc: "プーリーを肩〜頭上にセットし、マシンに対して横向きに立つ。腕の力ではなく肋骨と体幹をひねる意識で、斜め上から反対側の腰へと弧を描くように引き下ろす。",
+    benefit: "脇腹（腹斜筋）に負荷をかけながら回旋パワーを鍛え、バドミントンやゴルフ等のスイング強化にも直結する。" },
+  { id: "ex_cable_pallof_press", name: "ケーブルパロフプレス（アンチローテーション）", part: "abs", subTarget: "腹横筋・腹斜筋・体幹深層筋", type: "アイソレーション", equipment: "ケーブル", bw: false, bwRatio: 0.25,
+    desc: "プーリーをみぞおちの高さにセットし、横向きに立って胸の前でハンドルを両手で持つ。横へ引っ張られる力に耐えて身体がねじれないよう、真っ直ぐ前へ押し出して2秒キープ。",
+    benefit: "体幹の「ねじれに耐える力（抗回旋）」を強化し、高重量トレの軸の安定と腰痛予防に非常に有効。" }
+
 ];
 
 const DEFAULT_TEMPLATES = [
@@ -1865,7 +2273,13 @@ let undoStack = [];
 // UI一時状態
 let activeDate = todayStr();
 let selectedGoal = "hypertrophy";
-let selectedPart = "chest";
+let selectedParts = ["chest"];
+let selectMode = "single";
+let multiSelectedIds = new Set();
+let discoverMode = "combo";
+let selectedComboKey = "recovery";
+let comboSeed = 1;
+let currentComboItems = [];
 let masterFilterPart = "all";
 let bmChartMode = "comp";
 let calViewYear = new Date().getFullYear();
@@ -1879,7 +2293,7 @@ let editingTplExIds = [];
 
 function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V2);
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V3) || localStorage.getItem(STORAGE_KEY_V2);
     if (raw) {
       const p = JSON.parse(raw);
       if (p && p.profile && p.workouts) {
@@ -2173,94 +2587,6 @@ function addDropSetForEntry(eIdx) {
   showToast(`⬇ ドロップセット（${dropW}kg）を追加しました`);
 }
 
-function ensureWorkoutDay(dateStr) {
-  if (!appState.workouts[dateStr]) {
-    appState.workouts[dateStr] = {
-      date: dateStr,
-      bodyWeight: appState.profile.weight || 75.0,
-      memo: "",
-      entries: []
-    };
-  }
-  return appState.workouts[dateStr];
-}
-
-function calcEntryVolume(entry, dayBodyWeight) {
-  const ex = getExerciseById(entry.exerciseId);
-  const bw = Number(dayBodyWeight) || appState.profile.weight || 75;
-  let vol = 0;
-  (entry.sets || []).forEach(s => {
-    const w = Number(s.weight) || 0;
-    const r = Number(s.reps) || 0;
-    const effW = (ex && ex.bw && w === 0) ? Math.round(bw * 0.6) : w;
-    vol += effW * r;
-  });
-  return Math.round(vol);
-}
-
-function calcDayStats(dayObj) {
-  if (!dayObj || !Array.isArray(dayObj.entries) || dayObj.entries.length === 0) {
-    return { entriesCount: 0, setsCount: 0, doneSets: 0, volume: 0, parts: [], avgRpe: null };
-  }
-  let setsCount = 0, doneSets = 0, volume = 0, rpeSum = 0, rpeCnt = 0;
-  const partSet = new Set();
-  dayObj.entries.forEach(en => {
-    partSet.add(en.part);
-    volume += calcEntryVolume(en, dayObj.bodyWeight);
-    (en.sets || []).forEach(s => {
-      setsCount++;
-      if (s.done) doneSets++;
-      if (s.rpe !== undefined && s.rpe !== null && !isNaN(Number(s.rpe))) {
-        rpeSum += Number(s.rpe);
-        rpeCnt++;
-      }
-    });
-  });
-  return {
-    entriesCount: dayObj.entries.length,
-    setsCount,
-    doneSets,
-    volume,
-    parts: Array.from(partSet),
-    avgRpe: rpeCnt > 0 ? Math.round((rpeSum / rpeCnt) * 10) / 10 : null
-  };
-}
-
-// 種目の過去履歴（RPE情報含む）を日付降順で取得
-function getExerciseHistory(exerciseId, beforeDateStr = null) {
-  const dates = Object.keys(appState.workouts).sort((a, b) => b.localeCompare(a));
-  const list = [];
-  for (const d of dates) {
-    if (beforeDateStr && d >= beforeDateStr) continue;
-    const day = appState.workouts[d];
-    if (!day || !day.entries) continue;
-    const matched = day.entries.filter(en => en.exerciseId === exerciseId && en.sets && en.sets.length > 0);
-    if (matched.length > 0) {
-      let max1RM = 0, maxWeight = 0, allDone = true, totalSets = 0, sumReps = 0, rpeSum = 0, rpeCnt = 0, rpe10Count = 0;
-      matched.forEach(en => {
-        en.sets.forEach(s => {
-          totalSets++;
-          const w = Number(s.weight) || 0;
-          const r = Number(s.reps) || 0;
-          const rpe = (s.rpe !== undefined && s.rpe !== null && !isNaN(Number(s.rpe))) ? Number(s.rpe) : 8.0;
-          sumReps += r;
-          rpeSum += rpe;
-          rpeCnt++;
-          if (rpe >= 10) rpe10Count++;
-          if (!s.done) allDone = false;
-          if (w > maxWeight) maxWeight = w;
-          const rm = calcEpley1RM(w, r);
-          if (rm > max1RM) max1RM = rm;
-        });
-      });
-      const avgReps = totalSets > 0 ? Math.round(sumReps / totalSets) : 0;
-      const avgRpe = rpeCnt > 0 ? Math.round((rpeSum / rpeCnt) * 10) / 10 : 8.0;
-      list.push({ date: d, max1RM, maxWeight, allDone, totalSets, avgReps, avgRpe, rpe10Streak: rpe10Count >= 2 });
-    }
-  }
-  return list;
-}
-
 // =========================================================================
 // RPE連動 自動おすすめ重量・回数・セット数 算出エンジン
 // =========================================================================
@@ -2404,10 +2730,49 @@ function getExerciseUsageMap() {
   return map;
 }
 
+function estimateWorkoutMinutes(setsCount, hasSuperset = false) {
+  if (!setsCount || setsCount <= 0) return 0;
+  return Math.max(5, Math.round(setsCount * (hasSuperset ? 1.9 : 2.5)));
+}
+
+const PART_PRIORITY = { legs: 1, back: 2, chest: 3, shoulders: 4, arms: 5, abs: 6 };
+
+function sortExercisesSmart(exList) {
+  return [...exList].sort((a, b) => {
+    const typeA = a.type === "コンパウンド" ? 0 : 1;
+    const typeB = b.type === "コンパウンド" ? 0 : 1;
+    if (typeA !== typeB) return typeA - typeB;
+    return (PART_PRIORITY[a.part] || 9) - (PART_PRIORITY[b.part] || 9);
+  });
+}
+
+function calcAdjustedSets(exList, baseRecs, adjustEnabled) {
+  const totalRaw = baseRecs.reduce((s, r) => s + (r ? r.sets : 3), 0);
+  if (!adjustEnabled || (exList.length < 4 && totalRaw <= 14)) {
+    return baseRecs.map(r => (r ? r.sets : 3));
+  }
+  return exList.map((ex, idx) => {
+    const base = baseRecs[idx] ? baseRecs[idx].sets : 3;
+    if (idx === 0) return base;
+    if (ex.type === "アイソレーション" || idx >= 3) {
+      return Math.max(2, base - 1);
+    }
+    return base;
+  });
+}
+
+function getNextFreeSupersetGroups(dayObj) {
+  const used = new Set((dayObj?.entries || []).map(e => e.supersetGroup).filter(Boolean));
+  const all = ["A", "B", "C"];
+  const free = all.filter(g => !used.has(g));
+  return free.length > 0 ? free : all;
+}
+
 function getRecommendedNewExercises(partFilter = null, limit = 2, seed = 1) {
   const usage = getExerciseUsageMap();
   const today = todayStr();
-  const pool = appState.exercises.filter(e => !partFilter || e.part === partFilter);
+  const filterArr = Array.isArray(partFilter) ? partFilter : (partFilter ? [partFilter] : null);
+  const pool = appState.exercises.filter(e => !filterArr || filterArr.includes(e.part));
 
   const scored = pool.map((ex, idx) => {
     const u = usage[ex.id];
@@ -2426,13 +2791,244 @@ function getRecommendedNewExercises(partFilter = null, limit = 2, seed = 1) {
         reason = `実施少なめ（計${u.count}回）｜${ex.equipment}でバリエーション強化`;
       }
     }
-    // 擬似ランダムオフセットで「別の提案」ボタンが効くようにする
     const jitter = ((idx * 17 + seed * 31) % 23) * 0.8;
     return { ex, score: score + jitter, reason };
   });
 
   scored.sort((a, b) => b.score - a.score);
+
+  // 複数部位が指定されている場合は各部位から均等にピックアップ
+  if (filterArr && filterArr.length > 1) {
+    const byPart = {};
+    filterArr.forEach(p => { byPart[p] = scored.filter(x => x.ex.part === p); });
+    const picked = [];
+    let round = 0;
+    while (picked.length < limit && round < 10) {
+      let addedInRound = false;
+      for (const p of filterArr) {
+        if (byPart[p] && byPart[p][round]) {
+          picked.push(byPart[p][round]);
+          addedInRound = true;
+          if (picked.length >= limit) break;
+        }
+      }
+      if (!addedInRound) break;
+      round++;
+    }
+    return picked;
+  }
+
   return scored.slice(0, limit);
+}
+
+// =========================================================================
+// v4: 複数部位コンボおすすめ生成エンジン（回復ステータス連動）
+// =========================================================================
+function pickExForCombo(filterFn, usedIds, seedOffset) {
+  const usage = getExerciseUsageMap();
+  const today = todayStr();
+  const cands = appState.exercises.filter(ex => !usedIds.has(ex.id) && filterFn(ex));
+  if (cands.length === 0) return null;
+  const scored = cands.map((ex, idx) => {
+    const u = usage[ex.id];
+    const base = !u ? 90 : (diffDays(today, u.lastDate) >= 14 ? 70 : Math.max(10, 45 - u.count * 2));
+    const jitter = ((idx * 19 + (comboSeed + seedOffset) * 29) % 31) * 1.1;
+    return { ex, score: base + jitter };
+  }).sort((a, b) => b.score - a.score);
+  const chosen = scored[0].ex;
+  usedIds.add(chosen.id);
+  return chosen;
+}
+
+function buildComboDefinition(comboKey) {
+  const usedIds = new Set();
+  const isTri = (ex) => ex.part === "arms" && /三頭|プレスダウン|スカル|ディップス|ナロー|オーバーヘッドトライ/.test(ex.name + ex.subTarget);
+  const isBi  = (ex) => ex.part === "arms" && /二頭|カール/.test(ex.name + ex.subTarget);
+  const isRearSh = (ex) => ex.part === "shoulders" && /後部|リア|フェイスプル/.test(ex.name + ex.subTarget);
+  const isFrontSideSh = (ex) => ex.part === "shoulders" && !isRearSh(ex);
+
+  let title = "", desc = "", isAntagonist = false, items = [];
+  const pushItem = (ex, role, ssSlot = "") => {
+    if (ex) items.push({ ex, role, ssSlot, checked: true });
+  };
+
+  if (comboKey === "recovery") {
+    const recInfos = getPartRecoveryInfo();
+    const scoreMap = { overdue: 4, ready: 3, none: 2, recovering: 1 };
+    const sorted = [...recInfos].sort((a, b) => scoreMap[b.status] - scoreMap[a.status] || (b.hours || 999) - (a.hours || 999));
+    const majorKeys = ["chest", "back", "legs"];
+    const bestMajor = sorted.find(x => majorKeys.includes(x.part)) || sorted[0];
+    const pairMap = { chest: "arms", back: "arms", legs: "abs" };
+    let bestSub = sorted.find(x => x.part !== bestMajor.part && x.status !== "recovering") ||
+                  recInfos.find(x => x.part === pairMap[bestMajor.part]) || sorted[1];
+    const p1 = bestMajor.part, p2 = bestSub.part;
+    const antagonistPairs = new Set(["chest_back", "back_chest", "legs_abs", "abs_legs"]);
+    isAntagonist = antagonistPairs.has(`${p1}_${p2}`);
+
+    title = `🔋 回復ベストコンボ（${PARTS[p1].label} ＋ ${PARTS[p2].label}）`;
+    desc = `回復ステータス連動：現在しっかり回復している「${PARTS[p1].label}（${bestMajor.statusText}）」と「${PARTS[p2].label}（${bestSub.statusText}）」を軸に組んだ本日最適セットです。`;
+
+    pushItem(pickExForCombo(e => e.part === p1 && e.type === "コンパウンド", usedIds, 1), "メイン");
+    pushItem(pickExForCombo(e => e.part === p1, usedIds, 2), "メイン補助");
+    pushItem(pickExForCombo(e => e.part === p2 && e.type === "コンパウンド", usedIds, 3) || pickExForCombo(e => e.part === p2, usedIds, 3), "サブ1", isAntagonist ? "pair1" : "");
+    pushItem(pickExForCombo(e => e.part === p2, usedIds, 4), "サブ2", isAntagonist ? "pair2" : "");
+    if (isAntagonist && items.length >= 4) {
+      items[0].ssSlot = "pair1"; items[2].ssSlot = "pair1";
+      items[1].ssSlot = "pair2"; items[3].ssSlot = "pair2";
+    }
+  } else if (comboKey === "push") {
+    title = "🔥 プッシュ系コンボ（胸 ＋ 肩 ＋ 上腕三頭筋）";
+    desc = "「押す」動作で連動する3部位をまとめて効率よく追い込む定番分割。胸のコンパウンド後に肩・三頭で仕上げます。";
+    pushItem(pickExForCombo(e => e.part === "chest" && e.type === "コンパウンド", usedIds, 1), "メイン(胸)");
+    pushItem(pickExForCombo(e => e.part === "chest" && e.type === "アイソレーション", usedIds, 2), "仕上げ(胸)");
+    pushItem(pickExForCombo(e => isFrontSideSh(e), usedIds, 3), "サブ(肩)");
+    pushItem(pickExForCombo(e => isTri(e), usedIds, 4), "サブ(三頭)");
+  } else if (comboKey === "pull") {
+    title = "💪 プル系コンボ（背中 ＋ 上腕二頭筋 ＋ 肩後部）";
+    desc = "「引く」動作で連動する背面＆二頭筋を一気に強化。背中の厚み・広がりと力こぶを効率よく鍛えます。";
+    pushItem(pickExForCombo(e => e.part === "back" && e.type === "コンパウンド", usedIds, 1), "メイン(背中)");
+    pushItem(pickExForCombo(e => e.part === "back", usedIds, 2), "補助(背中)");
+    pushItem(pickExForCombo(e => isRearSh(e), usedIds, 3), "サブ(肩後部)");
+    pushItem(pickExForCombo(e => isBi(e), usedIds, 4), "サブ(二頭)");
+  } else if (comboKey === "antag_cb") {
+    isAntagonist = true;
+    title = "⚡ 拮抗筋スーパーセット（胸 × 背中）";
+    desc = "表と裏の拮抗筋を交互に行う時短＆高パンプ構成。一方を休ませながらもう一方を鍛えられるため高出力を維持できます。";
+    pushItem(pickExForCombo(e => e.part === "chest" && e.type === "コンパウンド", usedIds, 1), "SS1-表(胸)", "pair1");
+    pushItem(pickExForCombo(e => e.part === "back" && e.type === "コンパウンド", usedIds, 2), "SS1-裏(背中)", "pair1");
+    pushItem(pickExForCombo(e => e.part === "chest" && e.type === "アイソレーション", usedIds, 3), "SS2-表(胸)", "pair2");
+    pushItem(pickExForCombo(e => e.part === "back", usedIds, 4), "SS2-裏(背中)", "pair2");
+  } else if (comboKey === "antag_arm") {
+    isAntagonist = true;
+    title = "⚡ 腕の拮抗筋スーパーセット（二頭 × 三頭）";
+    desc = "上腕二頭筋と三頭筋を交互に刺激する「腕の日」最強の時短メニュー。強烈なパンプとサイズアップが狙えます。";
+    pushItem(pickExForCombo(e => isBi(e), usedIds, 1), "SS1-二頭", "pair1");
+    pushItem(pickExForCombo(e => isTri(e), usedIds, 2), "SS1-三頭", "pair1");
+    pushItem(pickExForCombo(e => isBi(e), usedIds, 3), "SS2-二頭", "pair2");
+    pushItem(pickExForCombo(e => isTri(e), usedIds, 4), "SS2-三頭", "pair2");
+  } else if (comboKey === "legs_abs") {
+    isAntagonist = true;
+    title = "🦵 下半身 ＋ 体幹コンボ（足 ＋ 腹筋）";
+    desc = "大筋群の脚トレに体幹・腹筋を組み合わせたバランス構成。後半の脚アイソレーションと腹筋のSS化も可能です。";
+    pushItem(pickExForCombo(e => e.part === "legs" && e.type === "コンパウンド", usedIds, 1), "メイン(脚)");
+    pushItem(pickExForCombo(e => e.part === "legs", usedIds, 2), "補助(脚)", "pair1");
+    pushItem(pickExForCombo(e => e.part === "abs", usedIds, 3), "体幹(腹筋1)", "pair1");
+    pushItem(pickExForCombo(e => e.part === "abs", usedIds, 4), "体幹(腹筋2)");
+  } else {
+    title = "✨ 上半身シルエット仕上げ（肩 ＋ 腕）";
+    desc = "逆三角形の肩幅と引き締まった腕を作るサブ部位特化コンボ。大筋群の回復待ちの日にも最適です。";
+    pushItem(pickExForCombo(e => e.part === "shoulders" && e.type === "コンパウンド", usedIds, 1), "メイン(肩)");
+    pushItem(pickExForCombo(e => e.part === "shoulders" && e.type === "アイソレーション", usedIds, 2), "仕上げ(肩)");
+    pushItem(pickExForCombo(e => isBi(e), usedIds, 3), "腕(二頭)", "pair1");
+    pushItem(pickExForCombo(e => isTri(e), usedIds, 4), "腕(三頭)", "pair1");
+    isAntagonist = true;
+  }
+
+  return { key: comboKey, title, desc, isAntagonist, items };
+}
+
+function renderComboRecommend(rebuild = true) {
+  const box = document.getElementById("comboRecommendBox");
+  if (!box) return;
+  if (rebuild || !currentComboItems || currentComboItems.length === 0) {
+    const def = buildComboDefinition(selectedComboKey);
+    box.dataset.comboTitle = def.title;
+    box.dataset.comboDesc = def.desc;
+    box.dataset.isAntag = def.isAntagonist ? "1" : "0";
+    currentComboItems = def.items;
+  }
+
+  const bw = parseFloat(document.getElementById("inpBodyWeight").value) || appState.profile.weight || 75.0;
+  const volAdj = document.getElementById("chkComboVolAdjust")?.checked ?? true;
+  const autoSS = document.getElementById("chkComboAutoSS")?.checked ?? true;
+  const isAntag = box.dataset.isAntag === "1";
+
+  const checkedItems = currentComboItems.filter(it => it.checked);
+  const recsAll = currentComboItems.map(it => calculateRecommendation(it.ex.id, selectedGoal, bw, activeDate));
+  const checkedRecs = checkedItems.map(it => calculateRecommendation(it.ex.id, selectedGoal, bw, activeDate));
+  const adjSetsChecked = calcAdjustedSets(checkedItems.map(it => it.ex), checkedRecs, volAdj);
+
+  const adjMap = new Map();
+  checkedItems.forEach((it, idx) => adjMap.set(it.ex.id, adjSetsChecked[idx]));
+
+  const totalSets = adjSetsChecked.reduce((s, n) => s + n, 0);
+  const hasSS = autoSS && isAntag && checkedItems.some(it => it.ssSlot);
+  const estMin = estimateWorkoutMinutes(totalSets, hasSS);
+
+  const rowsHtml = currentComboItems.map((it, idx) => {
+    const rec = recsAll[idx];
+    const setsToUse = it.checked ? (adjMap.get(it.ex.id) ?? rec.sets) : rec.sets;
+    const pInfo = PARTS[it.ex.part] || PARTS.chest;
+    const ssTag = (autoSS && isAntag && it.ssSlot) ? `<span class="meta-badge" style="color:#7dd3fc;border-color:var(--accent);">🔗 ${it.ssSlot === "pair1" ? "SS-1" : "SS-2"}</span>` : "";
+    const wTxt = rec.isBw ? (rec.weight > 0 ? `+${rec.weight}kg` : "自重") : `${rec.weight}kg`;
+    return `
+      <label class="multi-ex-row ${it.checked ? "checked" : ""}" style="margin-bottom:6px;">
+        <input type="checkbox" data-combock="${idx}" ${it.checked ? "checked" : ""}>
+        <div class="multi-ex-info">
+          <div class="multi-ex-name">
+            <span class="part-tag ${it.ex.part}">${pInfo.label}</span>
+            ${ssTag}
+            <span>${escHtml(it.ex.name)}</span>
+          </div>
+          <div class="multi-ex-sub">${escHtml(it.role)} ｜ 自動推奨：${wTxt} × ${rec.reps} × ${setsToUse}set</div>
+        </div>
+        <button type="button" class="action-btn btn-secondary btn-small" data-comboguide="${it.ex.id}" style="padding:4px 8px;">？</button>
+      </label>
+    `;
+  }).join("");
+
+  box.innerHTML = `
+    <div class="combo-title">${escHtml(box.dataset.comboTitle || "")}</div>
+    <div class="combo-desc">${escHtml(box.dataset.comboDesc || "")}</div>
+    <div style="margin-bottom:9px;">${rowsHtml}</div>
+    <div class="multi-summary-bar" style="margin-bottom:9px;">
+      <span>選択中：${checkedItems.length}種目 / 合計 ${totalSets}セット${hasSS ? "（SS時短）" : ""}</span>
+      <span style="color:var(--gold);">目安 約${estMin}分</span>
+    </div>
+    <button class="action-btn btn-gold" id="btnApplyCombo" style="margin-bottom:0;" ${checkedItems.length === 0 ? "disabled" : ""}>＋ このコンボを一括追加（自動重量セット）</button>
+  `;
+
+  box.querySelectorAll("[data-combock]").forEach(cb => {
+    cb.onchange = () => {
+      const i = parseInt(cb.dataset.combock, 10);
+      if (currentComboItems[i]) currentComboItems[i].checked = cb.checked;
+      renderComboRecommend(false);
+    };
+  });
+  box.querySelectorAll("[data-comboguide]").forEach(btn => {
+    btn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openGuideModal(btn.dataset.comboguide); };
+  });
+  const btnApply = document.getElementById("btnApplyCombo");
+  if (btnApply) {
+    btnApply.onclick = () => {
+      if (checkedItems.length === 0) return;
+      pushUndo(`コンボ一括追加(${box.dataset.comboTitle})`);
+      const day = ensureWorkoutDay(activeDate);
+      day.bodyWeight = bw;
+      const freeSS = getNextFreeSupersetGroups(day);
+      const slotToSS = { pair1: freeSS[0] || "A", pair2: freeSS[1] || "B" };
+
+      checkedItems.forEach((it, idx) => {
+        const rec = checkedRecs[idx];
+        const setsCnt = adjSetsChecked[idx];
+        const ssGrp = (autoSS && isAntag && it.ssSlot) ? (slotToSS[it.ssSlot] || "") : "";
+        day.entries.push({
+          id: genId("ent"),
+          exerciseId: it.ex.id,
+          exerciseName: it.ex.name,
+          part: it.ex.part,
+          goal: selectedGoal,
+          supersetGroup: ssGrp,
+          memo: "",
+          sets: Array.from({ length: setsCnt }, () => ({
+            weight: rec.weight, reps: rec.reps, rpe: 8.0, done: false, type: "normal"
+          }))
+        });
+      });
+      saveState(); renderAll();
+      showToast(`🧩 コンボ ${checkedItems.length}種目（計${totalSets}set）を一括追加しました！`);
+    };
+  }
 }
 
 function renderDiscoverList(containerId, partFilter, limit, seed) {
@@ -2565,18 +3161,110 @@ function renderTemplateQuickBar() {
   });
 }
 
+function renderPartPillsState() {
+  document.querySelectorAll("#partPills .part-pill").forEach(btn => {
+    btn.classList.toggle("active", selectedParts.includes(btn.dataset.part));
+  });
+  const badge = document.getElementById("selectedPartsCountBadge");
+  if (badge) {
+    badge.textContent = selectedParts.length === PART_KEYS.length
+      ? "全部位選択中"
+      : `${selectedParts.map(k => PARTS[k].label).join("・")}（${selectedParts.length}部位）`;
+  }
+}
+
+function renderMultiExChecklist() {
+  const listEl = document.getElementById("multiExChecklist");
+  const sumEl = document.getElementById("multiSummaryBar");
+  if (!listEl || !sumEl) return;
+
+  const q = (document.getElementById("inpMultiSearch")?.value || "").trim().toLowerCase();
+  const bw = parseFloat(document.getElementById("inpBodyWeight").value) || appState.profile.weight || 75.0;
+  const volAdj = document.getElementById("chkMultiVolAdjust")?.checked ?? true;
+  const sortComp = document.getElementById("chkMultiSortCompound")?.checked ?? true;
+
+  let filtered = appState.exercises.filter(e => selectedParts.includes(e.part));
+  if (q) {
+    filtered = filtered.filter(e =>
+      e.name.toLowerCase().includes(q) ||
+      (e.equipment || "").toLowerCase().includes(q) ||
+      (e.subTarget || "").toLowerCase().includes(q)
+    );
+  }
+  if (sortComp) filtered = sortExercisesSmart(filtered);
+
+  // 選択済み種目のボリューム計算
+  const pickedExs = appState.exercises.filter(e => multiSelectedIds.has(e.id));
+  const orderedPicked = sortComp ? sortExercisesSmart(pickedExs) : pickedExs;
+  const pickedRecs = orderedPicked.map(e => calculateRecommendation(e.id, selectedGoal, bw, activeDate));
+  const adjSets = calcAdjustedSets(orderedPicked, pickedRecs, volAdj);
+  const adjMap = new Map();
+  orderedPicked.forEach((e, idx) => adjMap.set(e.id, adjSets[idx]));
+
+  const totalSets = adjSets.reduce((s, n) => s + n, 0);
+  const estMin = estimateWorkoutMinutes(totalSets, false);
+  const warnTxt = totalSets >= 22 ? ' <span style="color:#fca5a5;">⚠ ボリューム多め</span>' : "";
+  sumEl.innerHTML = `
+    <span>選択中：${orderedPicked.length}種目 / 合計 ${totalSets}セット${warnTxt}</span>
+    <span style="color:var(--gold);">目安 約${estMin}分</span>
+  `;
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `<p class="note" style="text-align:center;padding:12px 0;margin:0;">該当する種目がありません。</p>`;
+    return;
+  }
+
+  listEl.innerHTML = filtered.map(ex => {
+    const isChk = multiSelectedIds.has(ex.id);
+    const rec = calculateRecommendation(ex.id, selectedGoal, bw, activeDate);
+    const setsDisp = isChk ? (adjMap.get(ex.id) ?? rec.sets) : rec.sets;
+    const wTxt = rec.isBw ? (rec.weight > 0 ? `+${rec.weight}kg` : "自重") : `${rec.weight}kg`;
+    const pInfo = PARTS[ex.part] || PARTS.chest;
+    return `
+      <label class="multi-ex-row ${isChk ? "checked" : ""}">
+        <input type="checkbox" data-mchk="${ex.id}" ${isChk ? "checked" : ""}>
+        <div class="multi-ex-info">
+          <div class="multi-ex-name">
+            <span class="part-tag ${ex.part}">${pInfo.label}</span>
+            <span>${escHtml(ex.name)}</span>
+          </div>
+          <div class="multi-ex-sub">${escHtml(ex.equipment)}・${escHtml(ex.type)} ｜ 自動推奨：${wTxt} × ${rec.reps} × ${setsDisp}set</div>
+        </div>
+        <button type="button" class="action-btn btn-secondary btn-small" data-mchkguide="${ex.id}" style="padding:4px 8px;">？</button>
+      </label>
+    `;
+  }).join("");
+
+  listEl.querySelectorAll("[data-mchk]").forEach(cb => {
+    cb.onchange = () => {
+      if (cb.checked) multiSelectedIds.add(cb.dataset.mchk);
+      else multiSelectedIds.delete(cb.dataset.mchk);
+      renderMultiExChecklist();
+    };
+  });
+  listEl.querySelectorAll("[data-mchkguide]").forEach(btn => {
+    btn.onclick = (e) => { e.preventDefault(); e.stopPropagation(); openGuideModal(btn.dataset.mchkguide); };
+  });
+}
+
 function renderExerciseSelect() {
+  renderPartPillsState();
   const sel = document.getElementById("selExercise");
-  const filtered = appState.exercises.filter(e => e.part === selectedPart);
+  const filtered = appState.exercises.filter(e => selectedParts.includes(e.part));
   const prevVal = sel.value;
+  const multiPart = selectedParts.length > 1;
   sel.innerHTML = filtered.map(e =>
-    `<option value="${e.id}">${escHtml(e.name)}（${escHtml(e.equipment)}）</option>`
+    `<option value="${e.id}">${multiPart ? `[${PARTS[e.part].label}] ` : ""}${escHtml(e.name)}（${escHtml(e.equipment)}）</option>`
   ).join("");
   if (filtered.some(e => e.id === prevVal)) sel.value = prevVal;
   updateRecommendationAndApply(true);
-  renderDiscoverList("discoverInputList", selectedPart, 2, discoverSeedInput);
+  renderMultiExChecklist();
+
+  const discoverLimit = Math.min(4, Math.max(2, selectedParts.length));
+  renderDiscoverList("discoverInputList", selectedParts, discoverLimit, discoverSeedInput);
   document.getElementById("discoverInputSubtitle").textContent =
-    `「${PARTS[selectedPart].label}」の中から未実施・ご無沙汰の効果的な種目をピックアップしています。`;
+    `「${selectedParts.map(k => PARTS[k].label).join("・")}」の中から未実施・ご無沙汰の効果的な種目をピックアップしています。`;
+  renderComboRecommend(false);
 }
 
 function updateRecommendationAndApply(autoApply = true) {
@@ -2628,8 +3316,31 @@ function renderTodayEntries() {
     `総負荷 ${stats.volume.toLocaleString()} kg` + (stats.avgRpe ? ` / RPE ${stats.avgRpe}` : "");
   document.getElementById("todayEntriesHeading").textContent =
     activeDate === todayStr() ? "今日のワークアウトメニュー" : `${activeDate} のワークアウト`;
+  const hasAnySS = !!(day && (day.entries || []).some(e => e.supersetGroup));
+  const estMinToday = estimateWorkoutMinutes(stats.setsCount, hasAnySS);
   document.getElementById("todayEntriesStats").textContent =
-    `${stats.entriesCount}種目 / 完了 ${stats.doneSets}/${stats.setsCount}set`;
+    `${stats.entriesCount}種目 / 完了 ${stats.doneSets}/${stats.setsCount}set` + (stats.setsCount > 0 ? `（目安 約${estMinToday}分）` : "");
+
+  // 当日の部位別セット数・負荷内訳バッジ
+  const bdEl = document.getElementById("todayPartBreakdown");
+  if (bdEl) {
+    if (!day || !day.entries || day.entries.length === 0) {
+      bdEl.style.display = "none";
+      bdEl.innerHTML = "";
+    } else {
+      const byPart = {};
+      day.entries.forEach(en => {
+        if (!byPart[en.part]) byPart[en.part] = { sets: 0, vol: 0 };
+        byPart[en.part].sets += (en.sets || []).filter(s => s.type !== "warmup").length;
+        byPart[en.part].vol += calcEntryVolume(en, day.bodyWeight, false);
+      });
+      bdEl.style.display = "flex";
+      bdEl.innerHTML = Object.keys(byPart).map(pk => {
+        const p = PARTS[pk] || PARTS.chest;
+        return `<span class="part-bd-chip"><span class="part-tag ${pk}">${p.label}</span> ${byPart[pk].sets}set <span style="color:var(--text-muted);font-weight:700;">(${byPart[pk].vol.toLocaleString()}kg)</span></span>`;
+      }).join("");
+    }
+  }
 
   // ヘッダーバッジ更新
   const latestBw = getLatestBodyMetric()?.weight || appState.profile.weight || 75.0;
@@ -2694,6 +3405,8 @@ function renderTodayEntries() {
           <div class="entry-meta">${goalLbl} ｜ 本番負荷 ${vol.toLocaleString()} kg ｜ 平均RPE ${avgRpe}</div>
         </div>
         <div style="display:flex;gap:4px;flex-shrink:0;">
+          <button class="action-btn btn-secondary btn-small entry-move-btn" data-emoveup="${eIdx}" title="上へ移動" ${eIdx === 0 ? "disabled" : ""}>↑</button>
+          <button class="action-btn btn-secondary btn-small entry-move-btn" data-emovedn="${eIdx}" title="下へ移動" ${eIdx === day.entries.length - 1 ? "disabled" : ""}>↓</button>
           <button class="action-btn btn-secondary btn-small" data-eguide="${en.exerciseId}" title="動作解説">？</button>
           <button class="action-btn btn-danger btn-small" data-edel="${eIdx}">削除</button>
         </div>
@@ -2717,6 +3430,22 @@ function renderTodayEntries() {
     `;
 
     card.querySelector(`[data-eguide="${en.exerciseId}"]`).onclick = () => openGuideModal(en.exerciseId);
+    const btnUp = card.querySelector(`[data-emoveup="${eIdx}"]`);
+    if (btnUp) btnUp.onclick = () => {
+      if (eIdx <= 0) return;
+      pushUndo("種目並び替え");
+      const arr = appState.workouts[activeDate].entries;
+      [arr[eIdx - 1], arr[eIdx]] = [arr[eIdx], arr[eIdx - 1]];
+      saveState(); renderAll();
+    };
+    const btnDn = card.querySelector(`[data-emovedn="${eIdx}"]`);
+    if (btnDn) btnDn.onclick = () => {
+      const arr = appState.workouts[activeDate].entries;
+      if (eIdx >= arr.length - 1) return;
+      pushUndo("種目並び替え");
+      [arr[eIdx + 1], arr[eIdx]] = [arr[eIdx], arr[eIdx + 1]];
+      saveState(); renderAll();
+    };
     card.querySelector(`[data-ewarmup="${eIdx}"]`).onclick = () => generateWarmupSetsForEntry(eIdx);
     card.querySelector(`[data-edrop="${eIdx}"]`).onclick = () => addDropSetForEntry(eIdx);
     card.querySelector(`[data-ess="${eIdx}"]`).onchange = (e) => {
@@ -3216,7 +3945,7 @@ function downloadIcsFile() {
   const startStr = `${dc}T${hh}${mm}00`, endStr = `${dc}T${String((parseInt(hh, 10) + 1) % 24).padStart(2, "0")}${mm}00`;
   const partsStr = (rem.parts || []).map(k => PARTS[k].label).join("・") || "全身";
   const ics = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//MuscleTrackerV2//JP", "BEGIN:VEVENT",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//MuscleTrackerV4//JP", "BEGIN:VEVENT",
     `DTSTART:${startStr}`, `DTEND:${endStr}`, `SUMMARY:💪 筋トレ（${partsStr}）`,
     `DESCRIPTION:${(rem.note || "筋トレ管理＆成長トラッカーからのリマインダー").replace(/\n/g, "\\n")}`,
     "BEGIN:VALARM", "TRIGGER:-PT30M", "ACTION:DISPLAY", "DESCRIPTION:筋トレ30分前です！", "END:VALARM",
@@ -3505,7 +4234,7 @@ function generateWorkoutReportImage(dateStr) {
 
   ctx.font = `700 22px ${fontBase}`;
   ctx.fillStyle = "#e2e8f0";
-  ctx.fillText(`${dateStr}   ｜   筋トレ管理＆成長トラッカー v3`, W / 2, 104);
+  ctx.fillText(`${dateStr}   ｜   筋トレ管理＆成長トラッカー v4`, W / 2, 104);
 
   // 実施部位バッジ
   const partW = 104, partGap = 12;
@@ -3642,7 +4371,7 @@ function generateWorkoutReportImage(dateStr) {
 
   // フッター
   ctx.textAlign = "center"; ctx.font = `700 15px ${fontBase}`; ctx.fillStyle = "#64748b";
-  ctx.fillText("Generated by 筋トレ管理＆成長トラッカー v3", W / 2, H - 26);
+  ctx.fillText("Generated by 筋トレ管理＆成長トラッカー v4", W / 2, H - 26);
 
   return canvas.toDataURL("image/png");
 }
@@ -3923,7 +4652,7 @@ function exportCsv() {
   });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob(["\uFEFF" + rows.join("\n")], { type: "text/csv;charset=utf-8;" }));
-  a.download = `muscle_log_v2_${todayStr()}.csv`; a.click();
+  a.download = `muscle_log_v4_${todayStr()}.csv`; a.click();
   showToast("CSVファイルを出力しました");
 }
 
@@ -3972,37 +4701,7 @@ function loadSampleData() {
   appState.reminder = { nextDate: addDaysStr(t, 2), nextTime: "19:00", parts: ["back", "legs"], note: "背中・脚の日！" };
   activeDate = t;
   saveState(); renderAll();
-  showToast("v3サンプルデータ（体組成・W/D/SS含む）を読み込みました！");
-}
-      ]
-    },
-    [addDaysStr(t, -9)]: {
-      date: addDaysStr(t, -9), bodyWeight: 75.8, memo: "背中・二頭の日",
-      entries: [
-        { id: genId("e"), exerciseId: "ex_deadlift", exerciseName: "デッドリフト", part: "back", goal: "strength", memo: "ベルト使用", sets: [{ weight: 105, reps: 5, rpe: 8.0, done: true }, { weight: 105, reps: 5, rpe: 8.5, done: true }, { weight: 105, reps: 5, rpe: 9.0, done: true }] },
-        { id: genId("e"), exerciseId: "ex_latpull", exerciseName: "ラットプルダウン", part: "back", goal: "hypertrophy", memo: "", sets: [{ weight: 55, reps: 10, rpe: 8.0, done: true }, { weight: 55, reps: 10, rpe: 8.0, done: true }, { weight: 55, reps: 10, rpe: 8.5, done: true }] },
-        { id: genId("e"), exerciseId: "ex_bb_curl", exerciseName: "バーベルカール", part: "arms", goal: "hypertrophy", memo: "", sets: [{ weight: 30, reps: 10, rpe: 8.0, done: true }, { weight: 30, reps: 10, rpe: 8.5, done: true }, { weight: 30, reps: 10, rpe: 9.0, done: true }] }
-      ]
-    },
-    [addDaysStr(t, -6)]: {
-      date: addDaysStr(t, -6), bodyWeight: 75.4, memo: "脚と肩をしっかり追い込んだ",
-      entries: [
-        { id: genId("e"), exerciseId: "ex_squat", exerciseName: "バーベルスクワット", part: "legs", goal: "hypertrophy", memo: "かなりギリギリ", sets: [{ weight: 85, reps: 10, rpe: 9.0, done: true }, { weight: 85, reps: 10, rpe: 9.5, done: true }, { weight: 85, reps: 10, rpe: 10.0, done: true }] },
-        { id: genId("e"), exerciseId: "ex_ohp", exerciseName: "オーバーヘッドプレス（ミリタリープレス）", part: "shoulders", goal: "hypertrophy", memo: "", sets: [{ weight: 42.5, reps: 10, rpe: 8.0, done: true }, { weight: 42.5, reps: 9, rpe: 9.0, done: true }, { weight: 42.5, reps: 8, rpe: 9.5, done: true }] }
-      ]
-    },
-    [addDaysStr(t, -3)]: {
-      date: addDaysStr(t, -3), bodyWeight: 75.0, memo: "ベンチ67.5kg余裕でクリア！次回70kgへ",
-      entries: [
-        { id: genId("e"), exerciseId: "ex_bench", exerciseName: "ベンチプレス", part: "chest", goal: "hypertrophy", memo: "RPE7.5〜8.0で完遂", sets: [{ weight: 67.5, reps: 10, rpe: 7.5, done: true }, { weight: 67.5, reps: 10, rpe: 8.0, done: true }, { weight: 67.5, reps: 10, rpe: 8.0, done: true }] },
-        { id: genId("e"), exerciseId: "ex_cable_pushdown", exerciseName: "ケーブルプレスダウン", part: "arms", goal: "hypertrophy", memo: "", sets: [{ weight: 25, reps: 10, rpe: 8.0, done: true }, { weight: 25, reps: 10, rpe: 8.0, done: true }, { weight: 25, reps: 10, rpe: 8.5, done: true }] },
-        { id: genId("e"), exerciseId: "ex_abroller_knee", exerciseName: "膝コロ（アブローラー）", part: "abs", goal: "hypertrophy", memo: "", sets: [{ weight: 0, reps: 12, rpe: 7.5, done: true }, { weight: 0, reps: 12, rpe: 8.0, done: true }, { weight: 0, reps: 12, rpe: 8.0, done: true }] }
-      ]
-    }
-  };
-  appState.reminder = { nextDate: t, nextTime: "19:00", parts: ["back", "legs"], note: "背中・脚の日！" };
-  saveState(); renderAll();
-  showToast("サンプルデータを読み込みました！RPE連動おすすめをお試しください");
+  showToast("v4サンプルデータ（体組成・W/D/SS含む）を読み込みました！");
 }
 
 // =========================================================================
@@ -4039,6 +4738,40 @@ function initEvents() {
   document.getElementById("headerBwBadge").onclick = () => document.querySelector('.tab-btn[data-tab="analytics"]').click();
   document.getElementById("btnJumpRemind").onclick = () => document.querySelector('.tab-btn[data-tab="remind"]').click();
   document.getElementById("btnJumpTemplates").onclick = () => document.querySelector('.tab-btn[data-tab="library"]').click();
+
+  // 日付・体重・全体メモ・目的切替（記録タブ）
+  document.getElementById("inpWorkoutDate").onchange = (e) => {
+    if (!e.target.value) return;
+    activeDate = e.target.value;
+    renderTodayEntries();
+    updateRecommendationAndApply(true);
+    document.getElementById("txtSharePreview").value = buildShareText(activeDate);
+  };
+  document.getElementById("inpBodyWeight").onchange = (e) => {
+    const bw = Math.max(20, Math.min(250, parseFloat(e.target.value) || appState.profile.weight || 75.0));
+    if (appState.workouts[activeDate]) {
+      appState.workouts[activeDate].bodyWeight = bw;
+    }
+    appState.profile.weight = bw;
+    saveState();
+    renderTodayEntries();
+    updateRecommendationAndApply(true);
+  };
+  document.getElementById("inpDayMemo").onchange = (e) => {
+    const day = ensureWorkoutDay(activeDate);
+    day.memo = e.target.value;
+    saveState();
+  };
+  document.querySelectorAll("[data-goal]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("[data-goal]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedGoal = btn.dataset.goal;
+      updateRecommendationAndApply(true);
+      renderMultiExChecklist();
+      renderComboRecommend(false);
+    };
+  });
 
   // v3: レポート画像オプション同期＆生成
   const syncReportCheck = (key, val) => {
@@ -4092,14 +4825,108 @@ function initEvents() {
     };
   });
 
-  // 部位フィルター（記録タブ）
+  // 部位フィルター（記録タブ：複数選択トグル対応）
   document.querySelectorAll("#partPills .part-pill").forEach(btn => {
     btn.onclick = () => {
-      document.querySelectorAll("#partPills .part-pill").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active"); selectedPart = btn.dataset.part;
+      const pk = btn.dataset.part;
+      if (selectedParts.includes(pk)) {
+        if (selectedParts.length === 1) {
+          showToast("最低1部位は選択状態にしてください", "info");
+          return;
+        }
+        selectedParts = selectedParts.filter(x => x !== pk);
+      } else {
+        selectedParts.push(pk);
+      }
       renderExerciseSelect();
     };
   });
+  document.getElementById("btnPartsAll").onclick = () => {
+    selectedParts = [...PART_KEYS];
+    renderExerciseSelect();
+  };
+  document.getElementById("btnPartsReset").onclick = () => {
+    selectedParts = [selectedParts[0] || "chest"];
+    renderExerciseSelect();
+  };
+
+  // 単体選択 / 複数一括選択 切替
+  document.querySelectorAll("#selModeBar [data-selmode]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("#selModeBar [data-selmode]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectMode = btn.dataset.selmode;
+      document.getElementById("singleSelectPanel").style.display = selectMode === "single" ? "block" : "none";
+      document.getElementById("multiSelectPanel").style.display = selectMode === "multi" ? "block" : "none";
+      if (selectMode === "multi") renderMultiExChecklist();
+    };
+  });
+  document.getElementById("inpMultiSearch").oninput = renderMultiExChecklist;
+  document.getElementById("chkMultiSortCompound").onchange = renderMultiExChecklist;
+  document.getElementById("chkMultiVolAdjust").onchange = renderMultiExChecklist;
+  document.getElementById("btnClearMultiSel").onclick = () => {
+    multiSelectedIds.clear();
+    renderMultiExChecklist();
+  };
+  document.getElementById("btnAddMultiExercises").onclick = () => {
+    if (multiSelectedIds.size === 0) {
+      showToast("追加する種目を1つ以上チェックしてください", "error");
+      return;
+    }
+    const bw = parseFloat(document.getElementById("inpBodyWeight").value) || appState.profile.weight || 75.0;
+    const sortComp = document.getElementById("chkMultiSortCompound").checked;
+    const volAdj = document.getElementById("chkMultiVolAdjust").checked;
+    let picked = appState.exercises.filter(e => multiSelectedIds.has(e.id));
+    if (sortComp) picked = sortExercisesSmart(picked);
+    const recs = picked.map(e => calculateRecommendation(e.id, selectedGoal, bw, activeDate));
+    const adjSets = calcAdjustedSets(picked, recs, volAdj);
+
+    pushUndo(`複数種目一括追加(${picked.length}種目)`);
+    const day = ensureWorkoutDay(activeDate);
+    day.bodyWeight = bw;
+    let totalAddedSets = 0;
+    picked.forEach((ex, idx) => {
+      const rec = recs[idx];
+      const setsCnt = adjSets[idx];
+      totalAddedSets += setsCnt;
+      day.entries.push({
+        id: genId("ent"),
+        exerciseId: ex.id,
+        exerciseName: ex.name,
+        part: ex.part,
+        goal: selectedGoal,
+        memo: "",
+        sets: Array.from({ length: setsCnt }, () => ({
+          weight: rec.weight, reps: rec.reps, rpe: 8.0, done: false, type: "normal"
+        }))
+      });
+    });
+    multiSelectedIds.clear();
+    saveState(); renderAll();
+    showToast(`☑ ${picked.length}種目（計${totalAddedSets}set）を一括追加しました！`);
+  };
+
+  // おすすめモード切替（単体 vs 複数部位コンボ）
+  document.querySelectorAll("#discoverModeBar [data-dmode]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("#discoverModeBar [data-dmode]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      discoverMode = btn.dataset.dmode;
+      document.getElementById("discoverComboPanel").style.display = discoverMode === "combo" ? "block" : "none";
+      document.getElementById("discoverSinglePanel").style.display = discoverMode === "single" ? "block" : "none";
+      if (discoverMode === "combo") renderComboRecommend(false);
+    };
+  });
+  document.querySelectorAll("#comboChipBar [data-combo]").forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll("#comboChipBar [data-combo]").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      selectedComboKey = btn.dataset.combo;
+      renderComboRecommend(true);
+    };
+  });
+  document.getElementById("chkComboAutoSS").onchange = () => renderComboRecommend(false);
+  document.getElementById("chkComboVolAdjust").onchange = () => renderComboRecommend(false);
 
   document.getElementById("selExercise").onchange = () => updateRecommendationAndApply(true);
   document.getElementById("btnShowExGuide").onclick = () => openGuideModal(document.getElementById("selExercise").value);
@@ -4150,7 +4977,14 @@ function initEvents() {
 
   // おすすめ種目の再抽選
   document.getElementById("btnRefreshDiscoverInput").onclick = () => {
-    discoverSeedInput++; renderDiscoverList("discoverInputList", selectedPart, 2, discoverSeedInput);
+    if (discoverMode === "combo") {
+      comboSeed++; renderComboRecommend(true);
+      showToast("別の種目組み合わせを再生成しました", "info");
+    } else {
+      discoverSeedInput++;
+      const discoverLimit = Math.min(4, Math.max(2, selectedParts.length));
+      renderDiscoverList("discoverInputList", selectedParts, discoverLimit, discoverSeedInput);
+    }
   };
   document.getElementById("btnRefreshDiscoverLib").onclick = () => {
     discoverSeedLib++; renderDiscoverList("discoverLibList", null, 3, discoverSeedLib);
@@ -4233,7 +5067,7 @@ function initEvents() {
       const perm = await Notification.requestPermission();
       if (perm === "granted") {
         const r = appState.reminder, ps = (r.parts || []).map(k => PARTS[k].label).join("・") || "筋トレ";
-        new Notification("💪 筋トレ管理＆成長トラッカー v2", { body: r.nextDate ? `次回予定：${r.nextDate} ${r.nextTime || ""}（${ps}）` : "通知テスト成功！" });
+        new Notification("💪 筋トレ管理＆成長トラッカー v4", { body: r.nextDate ? `次回予定：${r.nextDate} ${r.nextTime || ""}（${ps}）` : "通知テスト成功！" });
         showToast("テスト通知を送信しました");
       } else showToast("通知が許可されませんでした", "error");
     } catch (e) { showToast("通知送信に失敗しました", "error"); }
@@ -4256,7 +5090,7 @@ function initEvents() {
   document.getElementById("btnBackupJson").onclick = () => {
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" }));
-    a.download = `muscle_tracker_v2_backup_${todayStr()}.json`; a.click();
+    a.download = `muscle_tracker_v4_backup_${todayStr()}.json`; a.click();
     showToast("JSONバックアップを保存しました");
   };
   document.getElementById("btnRestoreJson").onclick = () => document.getElementById("inpRestoreJson").click();
