@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>筋トレ管理＆成長トラッカー v4</title>
+<title>IronFlow — 筋トレ管理＆成長トラッカー</title>
 <style>
   :root {
     --bg: #0b132b;
@@ -1156,6 +1156,166 @@
     cursor: default;
   }
 
+
+  /* v5: IronFlow 新機能スタイル（ジム集中モード・SSガイド・週次分析・バックアップ警報） */
+  .focus-bar {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.24), rgba(15, 23, 42, 0.95));
+    border: 1px solid rgba(56, 189, 248, 0.55);
+    border-radius: 13px;
+    padding: 9px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .focus-bar.is-focus {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.24), rgba(20, 184, 166, 0.18));
+    border-color: var(--green);
+  }
+  .focus-bar-info { flex: 1; min-width: 170px; }
+  .focus-bar-title { font-size: 13px; font-weight: 900; color: var(--text); }
+  .focus-bar-sub { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+
+  body.gym-focus-mode .setup-only-card { display: none !important; }
+  body.gym-focus-mode .set-check-btn { height: 38px; font-size: 15px; }
+  body.gym-focus-mode .set-input-wrap input { padding: 8px 3px; font-size: 14px; }
+  body.gym-focus-mode .rpe-select { padding: 8px 2px !important; }
+  body.gym-focus-mode .timer-box {
+    border-color: rgba(56, 189, 248, 0.65);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+
+  /* SS 交互進行ガイド＆1クリック結合 */
+  .ss-guide-panel {
+    background: var(--surface-2);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-radius: 11px;
+    padding: 9px 11px;
+    margin-bottom: 10px;
+  }
+  .ss-guide-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: var(--bg);
+    border-left: 4px solid var(--accent);
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  .ss-guide-item:last-child { margin-bottom: 0; }
+  .ss-guide-item.ss-B { border-left-color: var(--purple); }
+  .ss-guide-item.ss-C { border-left-color: var(--teal); }
+  .set-row.next-up {
+    box-shadow: 0 0 0 1.5px var(--gold), inset 0 0 12px rgba(250, 204, 21, 0.14);
+    background: rgba(250, 204, 21, 0.09);
+  }
+  .ss-join-bar {
+    display: flex;
+    justify-content: center;
+    margin: -4px 0 8px;
+  }
+  .ss-join-btn {
+    background: var(--surface-2);
+    color: var(--accent);
+    border: 1px dashed rgba(56, 189, 248, 0.55);
+    border-radius: 999px;
+    padding: 3px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .ss-join-btn:active { transform: scale(0.96); background: var(--accent-dark); color: #fff; }
+
+  /* タイマー設定行 */
+  .timer-settings-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(58, 80, 107, 0.65);
+  }
+  .alarm-chips {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .alarm-chip {
+    background: var(--bg);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    padding: 4px 7px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .alarm-chip.active {
+    background: rgba(20, 184, 166, 0.25);
+    color: #5eead4;
+    border-color: var(--teal);
+  }
+  @keyframes timerPulseFlash {
+    0%, 100% { box-shadow: none; }
+    50% { box-shadow: 0 0 0 3px var(--green), 0 0 24px rgba(34, 197, 94, 0.5); }
+  }
+  .timer-box.flash-done { animation: timerPulseFlash 0.55s ease-in-out 3; }
+
+  /* 回復プログレスバー＆成長/停滞ハイライト＆バックアップ警報 */
+  .rec-prog-track {
+    width: 100%;
+    height: 6px;
+    background: var(--bg);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .rec-prog-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.25s;
+  }
+  .insight-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .insight-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+  .insight-row.plateau { border-color: rgba(245, 158, 11, 0.55); background: rgba(245, 158, 11, 0.08); }
+  .insight-row.growth { border-color: rgba(34, 197, 94, 0.55); background: rgba(34, 197, 94, 0.08); }
+  .backup-alert-banner {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(28, 37, 65, 0.95));
+    border: 1px solid rgba(245, 158, 11, 0.65);
+    border-radius: 12px;
+    padding: 9px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+
 </style>
 </head>
 <body>
@@ -1163,7 +1323,7 @@
 <!-- Sticky Header -->
 <header>
   <div class="header-top">
-    <h1>💪 筋トレ管理＆成長トラッカー v4</h1>
+    <h1>⚡ IronFlow <span style="font-size:10px;color:var(--text-muted);font-weight:700;">v5</span></h1>
     <div class="header-right">
       <button class="undo-btn" id="btnUndo" disabled title="直前の操作を元に戻す">↩ 戻す</button>
       <div class="header-mini-badge bw" id="headerBwBadge" title="最新の体重">75.0kg</div>
@@ -1183,8 +1343,23 @@
 
   <!-- ==================== TAB 1: 記録 ==================== -->
   <section id="tab-input" class="tab-panel active">
+    <!-- ジム集中モード切替バー -->
+    <div class="focus-bar" id="focusModeBar">
+      <div class="focus-bar-info">
+        <div class="focus-bar-title" id="focusBarTitle">🎯 ジム集中モード：OFF（フル表示）</div>
+        <div class="focus-bar-sub" id="focusBarSub">ONにするとタイマーと今日のメニューだけを表示し片手操作に最適化します</div>
+      </div>
+      <button class="action-btn btn-teal btn-small" id="btnToggleFocusMode" style="margin-bottom:0;">🎯 集中モードON</button>
+    </div>
+
+    <!-- バックアップ推奨バナー（条件達成時のみ表示） -->
+    <div class="backup-alert-banner setup-only-card" id="backupAlertBanner" style="display:none;">
+      <span id="backupAlertText" style="color:#fde68a;font-weight:800;">💾 バックアップ推奨：前回保存から時間が経過しています</span>
+      <button class="action-btn btn-gold btn-small" id="btnQuickBackupBanner" style="margin-bottom:0;">今すぐJSON保存</button>
+    </div>
+
     <!-- リマインダーバナー -->
-    <div class="reminder-banner" id="homeReminderBanner">
+    <div class="reminder-banner setup-only-card" id="homeReminderBanner">
       <div class="rem-banner-main">
         <div class="rem-banner-title" id="remBannerTitle">次回の筋トレ予定を設定しましょう</div>
         <div class="rem-banner-sub" id="remBannerSub">リマインドタブから次回の日程と対象部位を設定できます</div>
@@ -1193,7 +1368,7 @@
     </div>
 
     <!-- クイック呼び出し：マイメニュー（テンプレート） -->
-    <div class="card-box" style="padding:11px 14px;">
+    <div class="card-box setup-only-card" style="padding:11px 14px;">
       <h2 style="margin-bottom:7px;">
         <span>📋 マイメニュー クイック呼び出し</span>
         <button class="action-btn btn-secondary btn-small" id="btnJumpTemplates">編集・作成</button>
@@ -1203,7 +1378,7 @@
     </div>
 
     <!-- 日付・当日体重・目標モード -->
-    <div class="card-box">
+    <div class="card-box setup-only-card">
       <h2>
         <span>トレーニング日・体重・目的</span>
         <span class="part-tag back" id="todayTotalVolBadge">総負荷 0 kg</span>
@@ -1226,7 +1401,7 @@
     </div>
 
     <!-- 種目選択＆RPE連動自動おすすめ（v4: 複数部位・複数種目対応） -->
-    <div class="card-box">
+    <div class="card-box setup-only-card">
       <h2>
         <span>種目選択＆自動おすすめセット</span>
         <span class="meta-badge" id="selectedPartsCountBadge">1部位選択中</span>
@@ -1335,28 +1510,12 @@
       </div>
     </div>
 
-    <!-- 今日のワークアウト一覧（RPE記録対応） -->
-    <div class="card-box">
-      <h2>
-        <span id="todayEntriesHeading">今日のワークアウトメニュー</span>
-        <span style="font-size:12px;color:var(--text-muted);" id="todayEntriesStats">0種目 / 0セット</span>
-      </h2>
-      <div id="todayEntriesList"></div>
-      <div class="btn-row" style="margin-top:8px;">
-        <button class="action-btn btn-gold btn-small" id="btnSaveTodayAsTemplate">💾 現在のメニューをテンプレート保存</button>
-      </div>
-      <div class="form-group" style="margin-bottom:0;">
-        <label class="field-label" for="inpDayMemo">本日の全体メモ（体調・気づき等）</label>
-        <input type="text" id="inpDayMemo" placeholder="例：睡眠十分、RPE8.0でフォームが安定した">
-      </div>
-    </div>
-
-    <!-- インターバルタイマー -->
-    <div class="timer-box">
+    <!-- インターバルタイマー（自動スタート＆音/バイブ設定対応） -->
+    <div class="timer-box" id="timerBoxCard">
       <div class="timer-top">
         <div>
           <div style="font-size:12px;font-weight:800;color:var(--accent);">⏱ インターバルタイマー</div>
-          <div style="font-size:11px;color:var(--text-muted);" id="timerStatusLbl">デフォルト90秒・完了時ビープ音</div>
+          <div style="font-size:11px;color:var(--text-muted);" id="timerStatusLbl">デフォルト90秒・セット完了連動可</div>
         </div>
         <div class="timer-display" id="timerDisplay">01:30</div>
       </div>
@@ -1372,10 +1531,40 @@
         <button class="action-btn btn-secondary btn-small" id="btnTimerPlus15">＋15秒</button>
         <button class="action-btn btn-secondary btn-small" id="btnTimerReset">リセット</button>
       </div>
+      <div class="timer-settings-row">
+        <label class="mini-toggle" style="padding:4px 8px;">
+          <input type="checkbox" id="chkTimerAutoStart" checked>
+          <span>✓完了で自動開始（SSはペア完了時）</span>
+        </label>
+        <div class="alarm-chips" id="alarmModeChips">
+          <button type="button" class="alarm-chip active" data-alarm="both">🔔 音+バイブ</button>
+          <button type="button" class="alarm-chip" data-alarm="vibe">📳 バイブ</button>
+          <button type="button" class="alarm-chip" data-alarm="sound">🔊 音のみ</button>
+          <button type="button" class="alarm-chip" data-alarm="silent">🔇 消音</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 今日のワークアウト一覧（RPE・SS進行ガイド対応） -->
+    <div class="card-box">
+      <h2>
+        <span id="todayEntriesHeading">今日のワークアウトメニュー</span>
+        <span style="font-size:12px;color:var(--text-muted);" id="todayEntriesStats">0種目 / 0セット</span>
+      </h2>
+      <div class="ss-guide-panel" id="ssGuidePanel" style="display:none;"></div>
+      <div id="todayEntriesList"></div>
+      <div class="btn-row" style="margin-top:8px;">
+        <button class="action-btn btn-gold btn-small" id="btnSaveTodayAsTemplate">💾 現在のメニューをテンプレート保存</button>
+        <button class="action-btn btn-secondary btn-small" id="btnQuickAddFromFocus" style="display:none;">＋ 種目を追加する</button>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="field-label" for="inpDayMemo">本日の全体メモ（体調・気づき等）</label>
+        <input type="text" id="inpDayMemo" placeholder="例：睡眠十分、RPE8.0でフォームが安定した">
+      </div>
     </div>
 
     <!-- 未実施・おすすめ種目＆複数部位コンボ提案カード（v4） -->
-    <div class="card-box" style="border-color: rgba(250, 204, 21, 0.45);">
+    <div class="card-box setup-only-card" style="border-color: rgba(250, 204, 21, 0.45);">
       <h2>
         <span>✨ おすすめ種目 ＆ 複数部位コンボ提案</span>
         <button class="action-btn btn-secondary btn-small" id="btnRefreshDiscoverInput">🔄 別の提案</button>
@@ -1417,7 +1606,7 @@
     </div>
 
     <!-- v3: 筋トレ結果レポート画像（PNG）出力＆共有（記録タブ下部） -->
-    <div class="card-box" style="border-color: rgba(56, 189, 248, 0.5);">
+    <div class="card-box setup-only-card" style="border-color: rgba(56, 189, 248, 0.5);">
       <h2>📸 今日の筋トレ結果を画像で共有（PNG）</h2>
       <label class="toggle-row">
         <span>体重・体脂肪率を画像に含める</span>
@@ -1711,6 +1900,17 @@
 
     <div class="summary-grid" id="analyticsSummaryGrid"></div>
 
+    <!-- v5: 週次ボリューム＆成長・停滞ハイライト -->
+    <div class="card-box" style="border-color: rgba(56, 189, 248, 0.45);">
+      <h2>
+        <span>📊 週次ボリューム ＆ 成長・停滞インサイト</span>
+        <span class="meta-badge" id="weeklyGoalBadge">今週 0 / 3回</span>
+      </h2>
+      <div class="summary-grid" id="weeklySummaryGrid" style="margin-bottom:8px;"></div>
+      <div class="bar-track" style="margin-bottom:10px;"><div class="bar-fill" id="weeklyFreqBar" style="width:0%;background:var(--green);"></div></div>
+      <div id="growthPlateauInsights"></div>
+    </div>
+
     <!-- グラフ1：種目別 推定1RM・最大重量・平均RPE -->
     <div class="card-box">
       <h2>種目別 推定1RM・最大重量・平均RPE 推移</h2>
@@ -1792,7 +1992,10 @@
 
     <!-- 共有・バックアップ・サンプル -->
     <div class="card-box">
-      <h2>📸 結果レポート画像・データ出力・バックアップ</h2>
+      <h2>
+        <span>📸 結果レポート画像・データ出力・バックアップ</span>
+        <span class="meta-badge" id="lastBackupBadge">バックアップ: 未実施</span>
+      </h2>
       <label class="toggle-row">
         <span>体重・体脂肪率を画像に含める</span>
         <input type="checkbox" id="chkReportBodyAnalytics">
@@ -1888,10 +2091,11 @@
 // =========================================================================
 // 定数・6部位・RPEオプション・65種目プリセット定義
 // =========================================================================
-const STORAGE_KEY = "muscle_tracker_v4";
+const STORAGE_KEY = "ironflow_v5";
+const STORAGE_KEY_V4 = "muscle_tracker_v4";
 const STORAGE_KEY_V3 = "muscle_tracker_v3";
 const STORAGE_KEY_V2 = "muscle_tracker_v2";
-const MAX_UNDO = 20;
+const MAX_UNDO = 30;
 
 const PARTS = {
   chest:     { key: "chest",     label: "胸",   color: "#ef4444", recMinH: 48, recMaxH: 72 },
@@ -2258,6 +2462,9 @@ function createDefaultState() {
     workouts: {},
     bodyMetrics: [],
     reportOpts: { includeBody: false, includeWarmup: false },
+    timerOpts: { autoStart: true, alarmMode: "both" },
+    lastBackupAt: null,
+    backupWorkoutCount: 0,
     reminder: {
       nextDate: addDaysStr(todayStr(), 2),
       nextTime: "19:00",
@@ -2272,6 +2479,7 @@ let undoStack = [];
 
 // UI一時状態
 let activeDate = todayStr();
+let gymFocusMode = false;
 let selectedGoal = "hypertrophy";
 let selectedParts = ["chest"];
 let selectMode = "single";
@@ -2293,7 +2501,7 @@ let editingTplExIds = [];
 
 function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V3) || localStorage.getItem(STORAGE_KEY_V2);
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V4) || localStorage.getItem(STORAGE_KEY_V3) || localStorage.getItem(STORAGE_KEY_V2);
     if (raw) {
       const p = JSON.parse(raw);
       if (p && p.profile && p.workouts) {
@@ -2301,6 +2509,7 @@ function loadState() {
         if (!Array.isArray(appState.deletedPresetIds)) appState.deletedPresetIds = [];
         if (!Array.isArray(appState.bodyMetrics)) appState.bodyMetrics = [];
         if (!appState.reportOpts) appState.reportOpts = { includeBody: false, includeWarmup: false };
+        if (!appState.timerOpts) appState.timerOpts = { autoStart: true, alarmMode: "both" };
         if (!Array.isArray(appState.templates) || appState.templates.length === 0) {
           appState.templates = deepClone(DEFAULT_TEMPLATES);
         }
@@ -3139,6 +3348,135 @@ function applyTemplateToToday(tplId) {
   showToast(`「${tpl.name}」の${added}種目を自動重量セットで追加しました！`);
 }
 
+
+// =========================================================================
+// v5: ジム集中モード・SS進行ガイド・バックアップ状態監視
+// =========================================================================
+function applyGymFocusModeUI() {
+  document.body.classList.toggle("gym-focus-mode", gymFocusMode);
+  const bar = document.getElementById("focusModeBar");
+  const title = document.getElementById("focusBarTitle");
+  const sub = document.getElementById("focusBarSub");
+  const btn = document.getElementById("btnToggleFocusMode");
+  const quickAdd = document.getElementById("btnQuickAddFromFocus");
+  if (!bar) return;
+
+  if (gymFocusMode) {
+    bar.classList.add("is-focus");
+    title.textContent = "🎯 ジム集中モード：ON（記録特化中）";
+    sub.textContent = "タイマーと今日のメニューのみ表示中。種目追加時は「解除」を押してください";
+    btn.textContent = "📋 通常表示に戻す";
+    btn.className = "action-btn btn-secondary btn-small";
+    if (quickAdd) quickAdd.style.display = "inline-block";
+  } else {
+    bar.classList.remove("is-focus");
+    title.textContent = "🎯 ジム集中モード：OFF（フル表示）";
+    sub.textContent = "ONにするとタイマーと今日のメニューだけを表示し片手操作に最適化します";
+    btn.textContent = "🎯 集中モードON";
+    btn.className = "action-btn btn-teal btn-small";
+    if (quickAdd) quickAdd.style.display = "none";
+  }
+}
+
+function getBackupStatusInfo() {
+  const totalWorkoutDays = Object.keys(appState.workouts || {}).filter(d => calcDayStats(appState.workouts[d]).entriesCount > 0).length;
+  const lastAt = appState.lastBackupAt;
+  const baseCnt = Number(appState.backupWorkoutCount) || 0;
+  const newSince = Math.max(0, totalWorkoutDays - baseCnt);
+  let daysAgo = null;
+  if (lastAt) {
+    daysAgo = diffDays(todayStr(), lastAt.slice(0, 10));
+  }
+  const needBackup = (totalWorkoutDays >= 3 && !lastAt) || (daysAgo !== null && daysAgo >= 14) || (newSince >= 10);
+  return { totalWorkoutDays, lastAt, daysAgo, newSince, needBackup };
+}
+
+function renderBackupStatusUI() {
+  const info = getBackupStatusInfo();
+  const banner = document.getElementById("backupAlertBanner");
+  const txt = document.getElementById("backupAlertText");
+  const badge = document.getElementById("lastBackupBadge");
+
+  if (badge) {
+    badge.textContent = info.lastAt ? `最終保存: ${info.lastAt.slice(0, 10)}` : "バックアップ: 未実施";
+  }
+  if (banner && txt) {
+    if (info.needBackup) {
+      banner.style.display = "flex";
+      txt.textContent = info.lastAt
+        ? `💾 前回保存から${info.daysAgo}日経過（新規+${info.newSince}日分）— JSON保存推奨`
+        : `💾 記録が${info.totalWorkoutDays}日分あります — データ保護のためJSON保存推奨`;
+    } else {
+      banner.style.display = "none";
+    }
+  }
+}
+
+function getSupersetProgressState(dayObj) {
+  const nextSetMap = new Map(); // "eIdx_sIdx" -> true if highlighted next
+  const guideItems = [];
+  if (!dayObj || !Array.isArray(dayObj.entries)) return { nextSetMap, guideItems };
+
+  ["A", "B", "C"].forEach(grp => {
+    const members = [];
+    dayObj.entries.forEach((en, eIdx) => {
+      if ((en.supersetGroup || "") === grp) members.push({ en, eIdx });
+    });
+    if (members.length < 2) return;
+
+    // 各メンバーの未完了本番セット数と次の未完了セットを取得
+    let bestMember = null;
+    let minDoneCount = Infinity;
+    members.forEach(m => {
+      const workSets = m.en.sets.map((s, sIdx) => ({ s, sIdx })).filter(x => x.s.type !== "warmup");
+      const doneCnt = workSets.filter(x => x.s.done).length;
+      const nextUnfinished = workSets.find(x => !x.s.done);
+      if (nextUnfinished && doneCnt < minDoneCount) {
+        minDoneCount = doneCnt;
+        const normPos = workSets.findIndex(x => x.sIdx === nextUnfinished.sIdx) + 1;
+        bestMember = { ...m, nextSetIdx: nextUnfinished.sIdx, normPos, totalWork: workSets.length };
+      }
+    });
+
+    const names = members.map(m => m.en.exerciseName).join(" ⇄ ");
+    if (bestMember) {
+      nextSetMap.set(`${bestMember.eIdx}_${bestMember.nextSetIdx}`, true);
+      guideItems.push({
+        grp,
+        names,
+        status: `▶ 次の出番：${bestMember.en.exerciseName}（${bestMember.normPos}/${bestMember.totalWork}set目）`,
+        doneAll: false
+      });
+    } else {
+      guideItems.push({
+        grp,
+        names,
+        status: `✅ SUPERSET ${grp} 全セット完了！`,
+        doneAll: true
+      });
+    }
+  });
+
+  return { nextSetMap, guideItems };
+}
+
+function shouldAutoStartTimerOnCheck(dayObj, eIdx, sIdx) {
+  if (!appState.timerOpts?.autoStart) return false;
+  const entry = dayObj?.entries?.[eIdx];
+  if (!entry) return false;
+  const grp = entry.supersetGroup || "";
+  if (!grp) return true;
+
+  const members = [];
+  dayObj.entries.forEach((en, idx) => {
+    if ((en.supersetGroup || "") === grp) members.push({ en, idx });
+  });
+  if (members.length < 2) return true;
+  // ペアの最後の種目（または他の相方種目の当該ラウンドが既に完了している場合）のみ自動スタート
+  const isLastInGroup = members[members.length - 1].idx === eIdx;
+  return isLastInGroup;
+}
+
 // =========================================================================
 // TAB 1: 記録 レンダリング
 // =========================================================================
@@ -3347,9 +3685,32 @@ function renderTodayEntries() {
   document.getElementById("headerBwBadge").textContent = `${Number(latestBw).toFixed(1)}kg`;
   document.getElementById("headerDoneSetsBadge").textContent = `${stats.doneSets}/${stats.setsCount}set`;
 
+  const ssGuideEl = document.getElementById("ssGuidePanel");
   if (!day || day.entries.length === 0) {
+    if (ssGuideEl) { ssGuideEl.style.display = "none"; ssGuideEl.innerHTML = ""; }
     listEl.innerHTML = `<p class="note" style="text-align:center;padding:16px 0;margin:0;">まだ種目がありません。上のマイメニューからワンタップ呼び出し、または種目を選んで追加してください。</p>`;
     return;
+  }
+
+  const ssProgress = getSupersetProgressState(day);
+  if (ssGuideEl) {
+    if (ssProgress.guideItems.length > 0) {
+      ssGuideEl.style.display = "block";
+      ssGuideEl.innerHTML = `
+        <div style="font-size:11px;font-weight:800;color:var(--accent);margin-bottom:6px;">🔗 スーパーセット（SS）交互進行ガイド</div>
+        ${ssProgress.guideItems.map(g => `
+          <div class="ss-guide-item ss-${g.grp}">
+            <div>
+              <div style="font-weight:800;color:var(--text);">[SS-${g.grp}] ${escHtml(g.names)}</div>
+              <div style="font-size:11px;color:${g.doneAll ? "#86efac" : "var(--gold)"};font-weight:800;margin-top:2px;">${escHtml(g.status)}</div>
+            </div>
+          </div>
+        `).join("")}
+      `;
+    } else {
+      ssGuideEl.style.display = "none";
+      ssGuideEl.innerHTML = "";
+    }
   }
 
   listEl.innerHTML = "";
@@ -3371,7 +3732,8 @@ function renderTodayEntries() {
       const sType = s.type || "normal";
       if (sType === "normal") normalCounter++;
       const badgeLbl = sType === "warmup" ? "W" : (sType === "drop" ? "D" : String(normalCounter));
-      const rowCls = (s.done ? " done" : "") + (sType === "warmup" ? " is-warmup" : "") + (sType === "drop" ? " is-drop" : "");
+      const isNextUp = ssProgress.nextSetMap.has(`${eIdx}_${sIdx}`);
+      const rowCls = (s.done ? " done" : "") + (sType === "warmup" ? " is-warmup" : "") + (sType === "drop" ? " is-drop" : "") + (isNextUp ? " next-up" : "");
       return `
         <div class="set-row${rowCls}">
           <button class="set-type-btn ${sType}" data-etype="${eIdx}_${sIdx}" title="タップで 通常 / W(アップ) / D(ドロップ) 切替">${badgeLbl}</button>
@@ -3415,6 +3777,7 @@ function renderTodayEntries() {
         <button class="action-btn btn-secondary btn-small" data-ewarmup="${eIdx}" style="border-color:rgba(245,158,11,0.5);color:#fde68a;">🔥 アップ自動生成</button>
         <button class="action-btn btn-secondary btn-small" data-eaddset="${eIdx}">＋1セット</button>
         <button class="action-btn btn-secondary btn-small" data-edrop="${eIdx}" style="border-color:rgba(167,139,250,0.55);color:#ddd6fe;">⬇ ドロップ追加</button>
+        <button class="action-btn btn-secondary btn-small" data-edup="${eIdx}" title="この種目を複製">📋 複製</button>
         <select class="ss-select" data-ess="${eIdx}" title="スーパーセットグループ">
           <option value="" ${ssGrp === "" ? "selected" : ""}>🔗 SSなし</option>
           <option value="A" ${ssGrp === "A" ? "selected" : ""}>🔗 SS-A</option>
@@ -3488,12 +3851,28 @@ function renderTodayEntries() {
         saveState(); renderAll();
       };
     });
+    card.querySelector(`[data-edup="${eIdx}"]`).onclick = () => {
+      pushUndo(`種目複製(${en.exerciseName})`);
+      const copy = deepClone(en);
+      copy.id = genId("ent");
+      copy.sets.forEach(s => { s.done = false; });
+      appState.workouts[activeDate].entries.splice(eIdx + 1, 0, copy);
+      saveState(); renderAll();
+      showToast(`📋 「${en.exerciseName}」を複製しました`);
+    };
     card.querySelectorAll("[data-edone]").forEach(btn => {
       btn.onclick = () => {
         const [ei, si] = btn.dataset.edone.split("_").map(Number);
         pushUndo("完了切替");
-        appState.workouts[activeDate].entries[ei].sets[si].done = !appState.workouts[activeDate].entries[ei].sets[si].done;
+        const dayObj = appState.workouts[activeDate];
+        const targetSet = dayObj.entries[ei].sets[si];
+        const nowDone = !targetSet.done;
+        targetSet.done = nowDone;
         saveState(); renderAll();
+        if (nowDone && shouldAutoStartTimerOnCheck(dayObj, ei, si)) {
+          startTimer();
+          showToast("⏱ セット完了 → インターバルタイマー自動スタート！", "info");
+        }
       };
     });
     card.querySelectorAll("[data-esdel]").forEach(btn => {
@@ -3525,6 +3904,39 @@ function renderTodayEntries() {
     };
 
     listEl.appendChild(card);
+
+    // 隣接カード間の1クリックSS結合ボタン
+    if (eIdx < day.entries.length - 1) {
+      const nextEn = day.entries[eIdx + 1];
+      const sameSS = en.supersetGroup && en.supersetGroup === nextEn.supersetGroup;
+      const joinBar = document.createElement("div");
+      joinBar.className = "ss-join-bar";
+      joinBar.innerHTML = sameSS
+        ? `<button type="button" class="ss-join-btn" data-ssunjoin="${eIdx}" style="border-style:solid;color:#86efac;border-color:rgba(34,197,94,0.5);">🔗 SS-${en.supersetGroup} 結合中（タップで解除）</button>`
+        : `<button type="button" class="ss-join-btn" data-ssjoin="${eIdx}">🔗 上下2種目をワンタップでSS結合</button>`;
+      const btnJoin = joinBar.querySelector(`[data-ssjoin="${eIdx}"]`);
+      if (btnJoin) {
+        btnJoin.onclick = () => {
+          pushUndo("スーパーセット1クリック結合");
+          const grp = en.supersetGroup || nextEn.supersetGroup || getNextFreeSupersetGroups(day)[0] || "A";
+          en.supersetGroup = grp;
+          nextEn.supersetGroup = grp;
+          saveState(); renderAll();
+          showToast(`🔗 「${en.exerciseName}」と「${nextEn.exerciseName}」を SS-${grp} に結合しました！`);
+        };
+      }
+      const btnUnjoin = joinBar.querySelector(`[data-ssunjoin="${eIdx}"]`);
+      if (btnUnjoin) {
+        btnUnjoin.onclick = () => {
+          pushUndo("スーパーセット解除");
+          en.supersetGroup = "";
+          nextEn.supersetGroup = "";
+          saveState(); renderAll();
+          showToast("スーパーセット結合を解除しました", "info");
+        };
+      }
+      listEl.appendChild(joinBar);
+    }
   });
 }
 
@@ -3715,21 +4127,42 @@ function closeTemplateModal() {
 // =========================================================================
 let timerTotalSec = 90, timerRemainSec = 90, timerInterval = null;
 
-function playBeep() {
-  try {
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    if (!AudioCtx) return;
-    const ctx = new AudioCtx();
-    [0, 0.22, 0.44].forEach(offset => {
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(880, ctx.currentTime + offset);
-      gain.gain.setValueAtTime(0.18, ctx.currentTime + offset);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + offset + 0.18);
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.start(ctx.currentTime + offset); osc.stop(ctx.currentTime + offset + 0.19);
-    });
-  } catch (e) {}
+function triggerTimerAlarm() {
+  const mode = appState.timerOpts?.alarmMode || "both";
+  const box = document.getElementById("timerBoxCard");
+  if (box) {
+    box.classList.remove("flash-done");
+    void box.offsetWidth;
+    box.classList.add("flash-done");
+  }
+  if ((mode === "vibe" || mode === "both") && navigator.vibrate) {
+    try { navigator.vibrate([250, 120, 250, 120, 400]); } catch (e) {}
+  }
+  if (mode === "sound" || mode === "both") {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      const ctx = new AudioCtx();
+      [0, 0.22, 0.44].forEach(offset => {
+        const osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, ctx.currentTime + offset);
+        gain.gain.setValueAtTime(0.18, ctx.currentTime + offset);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + offset + 0.18);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + offset); osc.stop(ctx.currentTime + offset + 0.19);
+      });
+    } catch (e) {}
+  }
+}
+
+function renderTimerOptsUI() {
+  const opts = appState.timerOpts || { autoStart: true, alarmMode: "both" };
+  const chk = document.getElementById("chkTimerAutoStart");
+  if (chk) chk.checked = !!opts.autoStart;
+  document.querySelectorAll("#alarmModeChips .alarm-chip").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.alarm === opts.alarmMode);
+  });
 }
 
 function updateTimerUI() {
@@ -3752,7 +4185,7 @@ function startTimer(sec = null) {
     if (timerRemainSec <= 0) {
       timerRemainSec = 0; clearInterval(timerInterval); timerInterval = null;
       document.getElementById("timerStatusLbl").textContent = "インターバル終了！次のセットへ！";
-      playBeep();
+      triggerTimerAlarm();
       showToast("⏱ インターバル終了！次のセットを始めましょう！");
     }
     updateTimerUI();
@@ -3880,15 +4313,21 @@ function getPartRecoveryInfo() {
 }
 
 function renderRemindTab() {
-  document.getElementById("recoveryGrid").innerHTML = getPartRecoveryInfo().map(inf => `
+  document.getElementById("recoveryGrid").innerHTML = getPartRecoveryInfo().map(inf => {
+    const p = PARTS[inf.part] || PARTS.chest;
+    const pct = inf.hours === null ? 100 : Math.min(100, Math.round((inf.hours / p.recMinH) * 100));
+    const barCol = inf.status === "recovering" ? "#f59e0b" : (inf.status === "overdue" ? "#ef4444" : "#22c55e");
+    return `
     <div class="rec-part-card">
       <div class="rec-part-top">
         <span class="part-tag ${inf.part}">${inf.label}</span>
         <span class="status-badge ${inf.status}">${inf.statusText}</span>
       </div>
       <div style="font-size:12px;font-weight:800;">${inf.lastDate ? `最終: ${inf.lastDate.slice(5)}` : "記録なし"}</div>
-      <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${inf.recText}</div>
-    </div>`).join("");
+      <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${inf.recText}（回復率 ${pct}%）</div>
+      <div class="rec-prog-track"><div class="rec-prog-fill" style="width:${pct}%;background:${barCol};"></div></div>
+    </div>`;
+  }).join("");
 
   const rem = appState.reminder;
   document.getElementById("inpRemDate").value = rem.nextDate || "";
@@ -3945,9 +4384,9 @@ function downloadIcsFile() {
   const startStr = `${dc}T${hh}${mm}00`, endStr = `${dc}T${String((parseInt(hh, 10) + 1) % 24).padStart(2, "0")}${mm}00`;
   const partsStr = (rem.parts || []).map(k => PARTS[k].label).join("・") || "全身";
   const ics = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//MuscleTrackerV4//JP", "BEGIN:VEVENT",
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//IronFlowV5//JP", "BEGIN:VEVENT",
     `DTSTART:${startStr}`, `DTEND:${endStr}`, `SUMMARY:💪 筋トレ（${partsStr}）`,
-    `DESCRIPTION:${(rem.note || "筋トレ管理＆成長トラッカーからのリマインダー").replace(/\n/g, "\\n")}`,
+    `DESCRIPTION:${(rem.note || "IronFlow からのトレーニングリマインダー").replace(/\n/g, "\\n")}`,
     "BEGIN:VALARM", "TRIGGER:-PT30M", "ACTION:DISPLAY", "DESCRIPTION:筋トレ30分前です！", "END:VALARM",
     "END:VEVENT", "END:VCALENDAR"
   ].join("\r\n");
@@ -4234,7 +4673,7 @@ function generateWorkoutReportImage(dateStr) {
 
   ctx.font = `700 22px ${fontBase}`;
   ctx.fillStyle = "#e2e8f0";
-  ctx.fillText(`${dateStr}   ｜   筋トレ管理＆成長トラッカー v4`, W / 2, 104);
+  ctx.fillText(`${dateStr}   ｜   IronFlow v5`, W / 2, 104);
 
   // 実施部位バッジ
   const partW = 104, partGap = 12;
@@ -4371,7 +4810,7 @@ function generateWorkoutReportImage(dateStr) {
 
   // フッター
   ctx.textAlign = "center"; ctx.font = `700 15px ${fontBase}`; ctx.fillStyle = "#64748b";
-  ctx.fillText("Generated by 筋トレ管理＆成長トラッカー v4", W / 2, H - 26);
+  ctx.fillText("Generated by IronFlow v5", W / 2, H - 26);
 
   return canvas.toDataURL("image/png");
 }
@@ -4413,8 +4852,101 @@ function getAllPRs() {
   return prMap;
 }
 
+
+function renderWeeklyAndGrowthInsights() {
+  const today = todayStr();
+  const thisWeekStart = addDaysStr(today, -6);
+  const prevWeekStart = addDaysStr(today, -13);
+  const prevWeekEnd = addDaysStr(today, -7);
+
+  let thisDays = 0, thisSets = 0, thisVol = 0;
+  let prevDays = 0, prevSets = 0, prevVol = 0;
+
+  Object.keys(appState.workouts).forEach(d => {
+    const st = calcDayStats(appState.workouts[d]);
+    if (st.entriesCount === 0) return;
+    if (d >= thisWeekStart && d <= today) {
+      thisDays++; thisSets += st.setsCount; thisVol += st.volume;
+    } else if (d >= prevWeekStart && d <= prevWeekEnd) {
+      prevDays++; prevSets += st.setsCount; prevVol += st.volume;
+    }
+  });
+
+  const targetFreq = appState.profile.freqPerWeek || 3;
+  const freqPct = Math.min(100, Math.round((thisDays / targetFreq) * 100));
+  const volDiffPct = prevVol > 0 ? Math.round(((thisVol - prevVol) / prevVol) * 100) : null;
+  const setsDiff = thisSets - prevSets;
+
+  const badgeEl = document.getElementById("weeklyGoalBadge");
+  const barEl = document.getElementById("weeklyFreqBar");
+  const gridEl = document.getElementById("weeklySummaryGrid");
+  const insEl = document.getElementById("growthPlateauInsights");
+  if (!gridEl || !insEl) return;
+
+  if (badgeEl) badgeEl.textContent = `直近7日 ${thisDays} / ${targetFreq}回目標 (${freqPct}%)`;
+  if (barEl) barEl.style.width = `${freqPct}%`;
+
+  gridEl.innerHTML = `
+    <div class="stat-pill">
+      <div class="lbl">直近7日 ボリューム（前週比）</div>
+      <div class="val" style="color:var(--gold);">${thisVol.toLocaleString()} kg ${volDiffPct !== null ? `<span class="${volDiffPct >= 0 ? 'pos' : 'neg'}" style="font-size:11px;">(${volDiffPct >= 0 ? '+' : ''}${volDiffPct}%)</span>` : ""}</div>
+    </div>
+    <div class="stat-pill">
+      <div class="lbl">直近7日 完了セット（前週比）</div>
+      <div class="val" style="color:var(--accent);">${thisSets} set <span class="${setsDiff >= 0 ? 'pos' : 'neg'}" style="font-size:11px;">(${setsDiff >= 0 ? '+' : ''}${setsDiff})</span></div>
+    </div>
+  `;
+
+  // 成長TOP種目 & 停滞アラート種目の抽出
+  const growthList = [];
+  const plateauList = [];
+  appState.exercises.forEach(ex => {
+    const hist = getExerciseHistory(ex.id);
+    if (hist.length >= 2) {
+      const latest = hist[0];
+      const oldestRecent = hist[Math.min(hist.length - 1, 4)];
+      const delta = latest.max1RM - oldestRecent.max1RM;
+      if (delta >= 1.5) {
+        growthList.push({ name: ex.name, part: ex.part, delta, cur: latest.max1RM });
+      } else if (hist.length >= 3) {
+        const last3 = hist.slice(0, 3);
+        const sameMax = Math.abs(last3[0].max1RM - last3[2].max1RM) < 0.5;
+        const highRpe = last3.every(h => h.avgRpe >= 9.0);
+        if (sameMax && highRpe) {
+          plateauList.push({ name: ex.name, part: ex.part, weight: last3[0].maxWeight, avgRpe: last3[0].avgRpe });
+        }
+      }
+    }
+  });
+
+  growthList.sort((a, b) => b.delta - a.delta);
+  let html = "";
+  if (growthList.length === 0 && plateauList.length === 0) {
+    html = `<p class="note" style="margin:0;">2回以上記録された種目が増えると、ここに伸びている種目や停滞アラートが自動表示されます。</p>`;
+  } else {
+    html = `<div class="insight-list">`;
+    growthList.slice(0, 3).forEach(g => {
+      html += `
+        <div class="insight-row growth">
+          <span>📈 <strong>${escHtml(g.name)}</strong>（<span class="part-tag ${g.part}">${PARTS[g.part].label}</span>）</span>
+          <span class="pos">推定1RM +${g.delta.toFixed(1)}kg → ${g.cur.toFixed(1)}kg</span>
+        </div>`;
+    });
+    plateauList.slice(0, 2).forEach(pl => {
+      html += `
+        <div class="insight-row plateau">
+          <span>⚠ 停滞気味：<strong>${escHtml(pl.name)}</strong>（${pl.weight}kg・RPE${pl.avgRpe}）</span>
+          <span style="color:#fde68a;font-weight:800;font-size:11px;">種目変更/軽負荷推奨</span>
+        </div>`;
+    });
+    html += `</div>`;
+  }
+  insEl.innerHTML = html;
+}
+
 function renderAnalyticsTab() {
   renderBodyMetricsSection();
+  renderWeeklyAndGrowthInsights();
 
   const incBody = !!appState.reportOpts?.includeBody;
   const incWarmup = !!appState.reportOpts?.includeWarmup;
@@ -4652,7 +5184,7 @@ function exportCsv() {
   });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob(["\uFEFF" + rows.join("\n")], { type: "text/csv;charset=utf-8;" }));
-  a.download = `muscle_log_v4_${todayStr()}.csv`; a.click();
+  a.download = `ironflow_log_${todayStr()}.csv`; a.click();
   showToast("CSVファイルを出力しました");
 }
 
@@ -4709,6 +5241,9 @@ function loadSampleData() {
 // =========================================================================
 function renderAll() {
   updateUndoBtn();
+  applyGymFocusModeUI();
+  renderBackupStatusUI();
+  renderTimerOptsUI();
   renderReminderHeaderAndBanner();
   renderTemplateQuickBar();
   renderTodayEntries();
@@ -4735,6 +5270,31 @@ function initEvents() {
   });
 
   document.getElementById("btnUndo").onclick = performUndo;
+  document.getElementById("btnToggleFocusMode").onclick = () => {
+    gymFocusMode = !gymFocusMode;
+    applyGymFocusModeUI();
+    showToast(gymFocusMode ? "🎯 ジム集中モードをONにしました" : "📋 通常表示に戻しました", "info");
+  };
+  document.getElementById("btnQuickAddFromFocus").onclick = () => {
+    gymFocusMode = false;
+    applyGymFocusModeUI();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  document.getElementById("chkTimerAutoStart").onchange = (e) => {
+    if (!appState.timerOpts) appState.timerOpts = { autoStart: true, alarmMode: "both" };
+    appState.timerOpts.autoStart = e.target.checked;
+    saveState();
+    showToast(e.target.checked ? "⏱ セット完了時のタイマー自動開始をONにしました" : "タイマー自動開始をOFFにしました", "info");
+  };
+  document.querySelectorAll("#alarmModeChips .alarm-chip").forEach(btn => {
+    btn.onclick = () => {
+      if (!appState.timerOpts) appState.timerOpts = { autoStart: true, alarmMode: "both" };
+      appState.timerOpts.alarmMode = btn.dataset.alarm;
+      saveState();
+      renderTimerOptsUI();
+      if (btn.dataset.alarm === "vibe" && navigator.vibrate) navigator.vibrate(150);
+    };
+  });
   document.getElementById("headerBwBadge").onclick = () => document.querySelector('.tab-btn[data-tab="analytics"]').click();
   document.getElementById("btnJumpRemind").onclick = () => document.querySelector('.tab-btn[data-tab="remind"]').click();
   document.getElementById("btnJumpTemplates").onclick = () => document.querySelector('.tab-btn[data-tab="library"]').click();
@@ -5067,7 +5627,7 @@ function initEvents() {
       const perm = await Notification.requestPermission();
       if (perm === "granted") {
         const r = appState.reminder, ps = (r.parts || []).map(k => PARTS[k].label).join("・") || "筋トレ";
-        new Notification("💪 筋トレ管理＆成長トラッカー v4", { body: r.nextDate ? `次回予定：${r.nextDate} ${r.nextTime || ""}（${ps}）` : "通知テスト成功！" });
+        new Notification("💪 IronFlow v5", { body: r.nextDate ? `次回予定：${r.nextDate} ${r.nextTime || ""}（${ps}）` : "通知テスト成功！" });
         showToast("テスト通知を送信しました");
       } else showToast("通知が許可されませんでした", "error");
     } catch (e) { showToast("通知送信に失敗しました", "error"); }
@@ -5087,12 +5647,19 @@ function initEvents() {
   };
   document.getElementById("btnCopyShareText").onclick = () => copyTextFallback(buildShareText(activeDate), "txtSharePreview");
   document.getElementById("btnExportCsv").onclick = exportCsv;
-  document.getElementById("btnBackupJson").onclick = () => {
+  const performJsonBackup = () => {
+    const totalDays = Object.keys(appState.workouts || {}).filter(d => calcDayStats(appState.workouts[d]).entriesCount > 0).length;
+    appState.lastBackupAt = new Date().toISOString();
+    appState.backupWorkoutCount = totalDays;
+    saveState();
+    renderBackupStatusUI();
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(appState, null, 2)], { type: "application/json" }));
-    a.download = `muscle_tracker_v4_backup_${todayStr()}.json`; a.click();
-    showToast("JSONバックアップを保存しました");
+    a.download = `ironflow_backup_${todayStr()}.json`; a.click();
+    showToast("💾 IronFlow JSONバックアップを保存しました");
   };
+  document.getElementById("btnBackupJson").onclick = performJsonBackup;
+  document.getElementById("btnQuickBackupBanner").onclick = performJsonBackup;
   document.getElementById("btnRestoreJson").onclick = () => document.getElementById("inpRestoreJson").click();
   document.getElementById("inpRestoreJson").onchange = (e) => {
     const file = e.target.files[0]; if (!file) return;
