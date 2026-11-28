@@ -1316,6 +1316,271 @@
     font-size: 12px;
   }
 
+
+  /* v6: 24時間時刻ピッカー・実測タイマー・前回記録インライン・ディロード・プレート計算・週間メーター */
+  .time-24h-picker {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+  }
+  .time-24h-picker select {
+    padding: 9px 6px;
+    text-align: center;
+    font-weight: 800;
+    font-size: 14px;
+    min-width: 0;
+  }
+  .time-24h-colon {
+    font-size: 16px;
+    font-weight: 900;
+    color: var(--accent);
+    text-align: center;
+  }
+  .time-quick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 6px;
+    margin-bottom: 10px;
+  }
+  .time-quick-chip {
+    background: var(--surface-2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .time-quick-chip.active, .time-quick-chip:active {
+    background: var(--accent-dark);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .remind-datetime-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  @media (min-width: 480px) {
+    .remind-datetime-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .cal-guide-box {
+    background: rgba(56, 189, 248, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 10px;
+    font-size: 11px;
+    color: #cbd5e1;
+    line-height: 1.55;
+  }
+  .cal-guide-box strong { color: var(--accent); }
+
+  /* ワークアウト実測タイマーバー */
+  .session-timer-bar {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.16), rgba(28, 37, 65, 0.95));
+    border: 1px solid rgba(20, 184, 166, 0.5);
+    border-radius: 13px;
+    padding: 9px 12px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .session-timer-bar.running {
+    border-color: var(--green);
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(28, 37, 65, 0.95));
+  }
+  .session-timer-val {
+    font-size: 20px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+  .session-timer-bar.running .session-timer-val { color: #86efac; }
+
+  /* ディロードバナー */
+  .deload-banner {
+    background: linear-gradient(135deg, rgba(20, 184, 166, 0.22), rgba(2, 132, 199, 0.18));
+    border: 1px solid var(--teal);
+    border-radius: 11px;
+    padding: 8px 11px;
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #5eead4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .deload-toggle-row {
+    margin-top: 10px;
+    margin-bottom: 0 !important;
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+
+  /* 前回記録インライン表示 */
+  .prev-summary-bar {
+    background: rgba(56, 189, 248, 0.09);
+    border: 1px solid rgba(56, 189, 248, 0.28);
+    border-radius: 8px;
+    padding: 5px 8px;
+    margin-bottom: 7px;
+    font-size: 11px;
+    color: #bae6fd;
+    line-height: 1.4;
+  }
+  .set-prev-inline {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 10px;
+    color: #94a3b8;
+    padding: 2px 4px 0 30px;
+    border-top: 1px dashed rgba(58, 80, 107, 0.4);
+    margin-top: 2px;
+  }
+  .set-prev-copy-btn {
+    background: rgba(56, 189, 248, 0.14);
+    color: #7dd3fc;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: 5px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .set-prev-copy-btn:active { background: var(--accent-dark); color: #fff; }
+
+  /* プレート計算機ビジュアル */
+  .plate-bar-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 76px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 10px;
+    margin-bottom: 10px;
+    overflow-x: auto;
+    gap: 3px;
+  }
+  .plate-sleeve {
+    width: 34px;
+    height: 10px;
+    background: #94a3b8;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+  .plate-collar {
+    width: 10px;
+    height: 22px;
+    background: #cbd5e1;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .plate-disc {
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 900;
+    color: #fff;
+    padding: 0 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.22);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+  .plate-list-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .plate-chip {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 5px 9px;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  /* 部位別 週間セット数メーター */
+  .weekly-meter-item {
+    margin-bottom: 10px;
+  }
+  .weekly-meter-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .weekly-meter-track {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: var(--bg);
+    border-radius: 999px;
+    overflow: hidden;
+    border: 1px solid rgba(58, 80, 107, 0.5);
+  }
+  .weekly-meter-optzone {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: rgba(34, 197, 94, 0.16);
+    border-left: 1px dashed rgba(34, 197, 94, 0.65);
+    border-right: 1px dashed rgba(34, 197, 94, 0.65);
+    pointer-events: none;
+  }
+  .weekly-meter-fill {
+    position: relative;
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.25s;
+  }
+  .swap-list {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .swap-item {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 11px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+  }
+  .swap-item:active { background: var(--accent-dark); }
+
 </style>
 </head>
 <body>
@@ -1323,7 +1588,7 @@
 <!-- Sticky Header -->
 <header>
   <div class="header-top">
-    <h1>⚡ IronFlow <span style="font-size:10px;color:var(--text-muted);font-weight:700;">v5</span></h1>
+    <h1>⚡ IronFlow <span style="font-size:10px;color:var(--text-muted);font-weight:700;">v6</span></h1>
     <div class="header-right">
       <button class="undo-btn" id="btnUndo" disabled title="直前の操作を元に戻す">↩ 戻す</button>
       <div class="header-mini-badge bw" id="headerBwBadge" title="最新の体重">75.0kg</div>
@@ -1350,6 +1615,18 @@
         <div class="focus-bar-sub" id="focusBarSub">ONにするとタイマーと今日のメニューだけを表示し片手操作に最適化します</div>
       </div>
       <button class="action-btn btn-teal btn-small" id="btnToggleFocusMode" style="margin-bottom:0;">🎯 集中モードON</button>
+    </div>
+
+    <!-- v6: ワークアウト実測タイマー（所要時間記録） -->
+    <div class="session-timer-bar" id="sessionTimerBar">
+      <div>
+        <div style="font-size:11px;font-weight:800;color:var(--teal);">🕒 トレーニング所要時間（自動保存）</div>
+        <div class="session-timer-val" id="sessionTimerDisplay">00:00:00</div>
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        <button class="action-btn btn-green btn-small" id="btnSessionToggle" style="margin-bottom:0;">▶ 開始</button>
+        <button class="action-btn btn-secondary btn-small" id="btnSessionReset" style="margin-bottom:0;">↺ リセット</button>
+      </div>
     </div>
 
     <!-- バックアップ推奨バナー（条件達成時のみ表示） -->
@@ -1396,6 +1673,13 @@
       <div class="seg-bar" style="margin-bottom:0;">
         <button class="seg-btn hypertrophy active" data-goal="hypertrophy">🔥 筋肥大 (8〜12回)</button>
         <button class="seg-btn strength" data-goal="strength">⚡ 筋力強化 (4〜6回)</button>
+      </div>
+      <label class="toggle-row deload-toggle-row">
+        <span>🛡 ディロード週モード（全推奨重量 −20% / RPE 7.0目安）</span>
+        <input type="checkbox" id="chkDeloadMode">
+      </label>
+      <div class="deload-banner" id="deloadActiveBanner" style="display:none;">
+        <span>🛡 ディロード中：回復優先で推奨重量 −20%・セット数軽減が自動適用されています</span>
       </div>
       <div class="part-breakdown-bar" id="todayPartBreakdown" style="display:none;"></div>
     </div>
@@ -1455,7 +1739,10 @@
         <!-- ステッパーUI -->
         <div class="stepper-grid">
           <div class="stepper-card">
-            <div class="stepper-lbl"><span>重量 (kg)</span><span id="bwHintBadge" style="color:var(--teal);"></span></div>
+            <div class="stepper-lbl">
+              <span>重量 (kg) <button type="button" class="set-prev-copy-btn" id="btnOpenPlateFromInput" title="プレート計算機">🏋 プレート</button></span>
+              <span id="bwHintBadge" style="color:var(--teal);"></span>
+            </div>
             <div class="stepper-ctrl">
               <button class="btn-step" id="btnWeightMinus">−2.5</button>
               <input type="number" class="stepper-input" id="inpWeight" step="0.5" min="0" max="500" value="60">
@@ -1777,21 +2064,33 @@
       <div class="recovery-grid" id="recoveryGrid"></div>
     </div>
 
-    <!-- 次回筋トレ予定・リマインド設定 -->
+    <!-- 次回筋トレ予定・リマインド設定（v6: 24時間表記＆カレンダー連携強化） -->
     <div class="card-box">
       <h2>
         <span>📅 次回筋トレ予定・リマインド設定</span>
         <button class="action-btn btn-purple btn-small" id="btnAutoSuggestNext">✨ 自動提案</button>
       </h2>
-      <div class="form-row">
-        <div class="form-group">
+      <div class="remind-datetime-grid">
+        <div class="form-group" style="margin-bottom:0;">
           <label class="field-label" for="inpRemDate">次回予定日</label>
           <input type="date" id="inpRemDate">
         </div>
-        <div class="form-group">
-          <label class="field-label" for="inpRemTime">予定時刻</label>
-          <input type="time" id="inpRemTime" value="19:00">
+        <div class="form-group" style="margin-bottom:0;">
+          <label class="field-label">予定時刻（24時間表記）</label>
+          <div class="time-24h-picker">
+            <select id="selRemHour" aria-label="時（24時間）"></select>
+            <span class="time-24h-colon">:</span>
+            <select id="selRemMin" aria-label="分"></select>
+          </div>
         </div>
+      </div>
+      <div class="time-quick-chips" id="remTimeQuickChips">
+        <button type="button" class="time-quick-chip" data-qtime="07:00">07:00</button>
+        <button type="button" class="time-quick-chip" data-qtime="12:00">12:00</button>
+        <button type="button" class="time-quick-chip" data-qtime="18:00">18:00</button>
+        <button type="button" class="time-quick-chip" data-qtime="19:00">19:00</button>
+        <button type="button" class="time-quick-chip" data-qtime="20:00">20:00</button>
+        <button type="button" class="time-quick-chip" data-qtime="21:00">21:00</button>
       </div>
       <label class="field-label">予定部位（複数選択可）</label>
       <div class="chip-grid" id="remPartChips">
@@ -1808,8 +2107,14 @@
       </div>
       <button class="action-btn btn-green" id="btnSaveReminder">💾 次回リマインドを保存</button>
       <div class="form-row">
-        <button class="action-btn btn-gold" id="btnDownloadIcs" style="margin-bottom:0;">📆 カレンダー登録 (.ics)</button>
-        <button class="action-btn btn-secondary" id="btnTestNotify" style="margin-bottom:0;">🔔 通知テスト</button>
+        <button class="action-btn btn-primary" id="btnOpenGoogleCal" style="margin-bottom:0;">📅 Googleカレンダーへ登録</button>
+        <button class="action-btn btn-gold" id="btnDownloadIcs" style="margin-bottom:0;">📆 スマホ標準カレンダー (.ics)</button>
+      </div>
+      <div class="cal-guide-box">
+        <strong>📱 スマホへ確実に通知を届ける使い方</strong><br>
+        Webアプリは画面を閉じると自動で通知を鳴らせないため、スマホのカレンダー通知を使います。<br>
+        ・<strong>Googleカレンダー</strong>：ボタンを押すと予定入力済みの画面が開くので「保存」を押すだけ。<br>
+        ・<strong>iPhone / Android標準カレンダー (.ics)</strong>：ダウンロード後にファイルを開くと「30分前通知付き」で登録できます。
       </div>
     </div>
   </section>
@@ -1908,6 +2213,9 @@
       </h2>
       <div class="summary-grid" id="weeklySummaryGrid" style="margin-bottom:8px;"></div>
       <div class="bar-track" style="margin-bottom:10px;"><div class="bar-fill" id="weeklyFreqBar" style="width:0%;background:var(--green);"></div></div>
+      <h3 style="margin-top:10px;">🎯 部位別 週間セット数メーター（直近7日・筋肥大最適ゾーン）</h3>
+      <p class="note" style="margin-bottom:8px;font-size:11px;">緑の帯が科学的目安（大筋群: 週10〜20set / 小筋群: 週8〜16set）です。</p>
+      <div id="weeklyPartMeters" style="margin-bottom:12px;"></div>
       <div id="growthPlateauInsights"></div>
     </div>
 
@@ -2084,6 +2392,65 @@
   </div>
 </div>
 
+<!-- モーダル4：種目のワンタップ代替（スワップ） -->
+<div class="modal-backdrop" id="swapModal">
+  <div class="modal-dialog">
+    <h3 class="modal-title" id="swapModalTitle">⇄ 種目を代替（スワップ）</h3>
+    <p class="note" id="swapModalSub" style="margin-bottom:8px;">器具が埋まっている時などに、同じ部位の別種目へ自動重量セット付きで差し替えます。</p>
+    <input type="text" id="inpSwapSearch" placeholder="🔍 代替種目を検索（種目名・器具）…">
+    <div class="swap-list" id="swapCandidateList"></div>
+    <div class="modal-footer" style="grid-template-columns:1fr;">
+      <button class="action-btn btn-secondary" id="btnCloseSwap" style="margin-bottom:0;">キャンセル</button>
+    </div>
+  </div>
+</div>
+
+<!-- モーダル5：種目クイック履歴＆1RM推移 -->
+<div class="modal-backdrop" id="historyModal">
+  <div class="modal-dialog">
+    <h3 class="modal-title" id="histModalTitle">📈 種目履歴＆推移</h3>
+    <div class="summary-grid" id="histModalSummary" style="margin-bottom:8px;"></div>
+    <div class="chart-canvas-wrap" style="margin:6px 0 10px;">
+      <canvas id="canvasQuickHistChart" width="440" height="175"></canvas>
+    </div>
+    <div id="histModalLogList" style="max-height:220px;overflow-y:auto;"></div>
+    <div class="modal-footer" style="grid-template-columns:1fr;">
+      <button class="action-btn btn-secondary" id="btnCloseHist" style="margin-bottom:0;">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- モーダル6：バーベル プレート計算機 -->
+<div class="modal-backdrop" id="plateModal">
+  <div class="modal-dialog">
+    <h3 class="modal-title">🏋 バーベル プレート計算機</h3>
+    <div class="form-group" style="margin-bottom:8px;">
+      <label class="field-label">バー（シャフト）の重量</label>
+      <div class="alarm-chips" id="plateBarChips">
+        <button type="button" class="alarm-chip active" data-barw="20">20kg (標準)</button>
+        <button type="button" class="alarm-chip" data-barw="15">15kg</button>
+        <button type="button" class="alarm-chip" data-barw="10">10kg</button>
+        <button type="button" class="alarm-chip" data-barw="0">0kg (スミス等)</button>
+      </div>
+    </div>
+    <div class="stepper-card" style="margin-bottom:10px;">
+      <div class="stepper-lbl"><span>目標合計重量 (kg)</span><span id="platePerSideLbl" style="color:var(--gold);">片側: 0kg</span></div>
+      <div class="stepper-ctrl">
+        <button class="btn-step" id="btnPlateMinus">−2.5</button>
+        <input type="number" class="stepper-input" id="inpPlateTarget" step="0.5" min="0" max="400" value="70">
+        <button class="btn-step" id="btnPlatePlus">＋2.5</button>
+      </div>
+    </div>
+    <div class="plate-bar-visual" id="plateBarVisual"></div>
+    <div style="font-size:12px;font-weight:800;color:var(--accent);margin-bottom:6px;">片側に載せるプレート構成</div>
+    <div class="plate-list-chips" id="plateListChips"></div>
+    <p class="note" id="plateRemainderNote" style="margin-bottom:0;"></p>
+    <div class="modal-footer" style="grid-template-columns:1fr;">
+      <button class="action-btn btn-secondary" id="btnClosePlate" style="margin-bottom:0;">閉じる</button>
+    </div>
+  </div>
+</div>
+
 <!-- トースト通知 -->
 <div class="toast" id="toast">完了しました</div>
 
@@ -2091,7 +2458,8 @@
 // =========================================================================
 // 定数・6部位・RPEオプション・65種目プリセット定義
 // =========================================================================
-const STORAGE_KEY = "ironflow_v5";
+const STORAGE_KEY = "ironflow_v6";
+const STORAGE_KEY_V5 = "ironflow_v5";
 const STORAGE_KEY_V4 = "muscle_tracker_v4";
 const STORAGE_KEY_V3 = "muscle_tracker_v3";
 const STORAGE_KEY_V2 = "muscle_tracker_v2";
@@ -2463,6 +2831,8 @@ function createDefaultState() {
     bodyMetrics: [],
     reportOpts: { includeBody: false, includeWarmup: false },
     timerOpts: { autoStart: true, alarmMode: "both" },
+    deloadMode: false,
+    plateBarWeight: 20,
     lastBackupAt: null,
     backupWorkoutCount: 0,
     reminder: {
@@ -2498,10 +2868,13 @@ let discoverSeedLib = 1;
 let currentGuideExId = null;
 let editingTplId = null;
 let editingTplExIds = [];
+let swappingEntryIdx = null;
+let sessionTimerInterval = null;
+let sessionTimerRunning = false;
 
 function loadState() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V4) || localStorage.getItem(STORAGE_KEY_V3) || localStorage.getItem(STORAGE_KEY_V2);
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY_V5) || localStorage.getItem(STORAGE_KEY_V4) || localStorage.getItem(STORAGE_KEY_V3) || localStorage.getItem(STORAGE_KEY_V2);
     if (raw) {
       const p = JSON.parse(raw);
       if (p && p.profile && p.workouts) {
@@ -2510,6 +2883,8 @@ function loadState() {
         if (!Array.isArray(appState.bodyMetrics)) appState.bodyMetrics = [];
         if (!appState.reportOpts) appState.reportOpts = { includeBody: false, includeWarmup: false };
         if (!appState.timerOpts) appState.timerOpts = { autoStart: true, alarmMode: "both" };
+        if (typeof appState.deloadMode !== "boolean") appState.deloadMode = false;
+        if (typeof appState.plateBarWeight !== "number") appState.plateBarWeight = 20;
         if (!Array.isArray(appState.templates) || appState.templates.length === 0) {
           appState.templates = deepClone(DEFAULT_TEMPLATES);
         }
@@ -2616,6 +2991,7 @@ function ensureWorkoutDay(dateStr) {
       date: dateStr,
       bodyWeight: appState.profile.weight || 75.0,
       memo: "",
+      durationSec: 0,
       entries: []
     };
   }
@@ -2701,6 +3077,91 @@ function getExerciseHistory(exerciseId, beforeDateStr = null) {
     }
   }
   return list;
+}
+
+
+// v6: 種目の直近前回セット詳細（ウォームアップ除く）を取得
+function getPreviousExerciseDetail(exerciseId, beforeDateStr) {
+  const dates = Object.keys(appState.workouts).sort((a, b) => b.localeCompare(a));
+  for (const d of dates) {
+    if (beforeDateStr && d >= beforeDateStr) continue;
+    const day = appState.workouts[d];
+    if (!day || !day.entries) continue;
+    const matched = day.entries.find(en => en.exerciseId === exerciseId && en.sets && en.sets.some(s => s.type !== "warmup"));
+    if (matched) {
+      const workSets = matched.sets.filter(s => s.type !== "warmup").map(s => ({
+        weight: Number(s.weight) || 0,
+        reps: Number(s.reps) || 0,
+        rpe: (s.rpe !== undefined && s.rpe !== null) ? Number(s.rpe) : 8.0,
+        type: s.type || "normal"
+      }));
+      return { date: d, sets: workSets };
+    }
+  }
+  return null;
+}
+
+function formatDurationHMS(sec) {
+  const s = Math.max(0, Math.floor(Number(sec) || 0));
+  const hh = String(Math.floor(s / 3600)).padStart(2, "0");
+  const mm = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+  const ss = String(s % 60).padStart(2, "0");
+  return `${hh}:${mm}:${ss}`;
+}
+
+function formatDurationJa(sec) {
+  const s = Math.max(0, Math.floor(Number(sec) || 0));
+  if (s < 60) return s > 0 ? `${s}秒` : "";
+  const mins = Math.round(s / 60);
+  if (mins < 60) return `${mins}分`;
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return m > 0 ? `${h}時間${m}分` : `${h}時間`;
+}
+
+// v6: ワークアウト実測タイマー制御
+function updateSessionTimerUI() {
+  const day = appState.workouts[activeDate];
+  const sec = day ? (Number(day.durationSec) || 0) : 0;
+  const disp = document.getElementById("sessionTimerDisplay");
+  const bar = document.getElementById("sessionTimerBar");
+  const btn = document.getElementById("btnSessionToggle");
+  if (disp) disp.textContent = formatDurationHMS(sec);
+  if (bar) bar.classList.toggle("running", sessionTimerRunning);
+  if (btn) {
+    btn.textContent = sessionTimerRunning ? "⏸ 一時停止" : (sec > 0 ? "▶ 再開" : "▶ 開始");
+    btn.className = sessionTimerRunning ? "action-btn btn-gold btn-small" : "action-btn btn-green btn-small";
+  }
+}
+
+function startSessionTimer() {
+  if (sessionTimerRunning) return;
+  ensureWorkoutDay(activeDate);
+  sessionTimerRunning = true;
+  if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+  sessionTimerInterval = setInterval(() => {
+    const day = ensureWorkoutDay(activeDate);
+    day.durationSec = (Number(day.durationSec) || 0) + 1;
+    if (day.durationSec % 5 === 0) saveState();
+    updateSessionTimerUI();
+  }, 1000);
+  updateSessionTimerUI();
+}
+
+function pauseSessionTimer() {
+  sessionTimerRunning = false;
+  if (sessionTimerInterval) { clearInterval(sessionTimerInterval); sessionTimerInterval = null; }
+  saveState();
+  updateSessionTimerUI();
+}
+
+function resetSessionTimer() {
+  pauseSessionTimer();
+  if (appState.workouts[activeDate]) {
+    appState.workouts[activeDate].durationSec = 0;
+    saveState();
+  }
+  updateSessionTimerUI();
 }
 
 // =========================================================================
@@ -2852,23 +3313,38 @@ function calculateRecommendation(exerciseId, goal, bodyWeight, dateStr) {
         badgeType = "caution";
       }
     }
-    return { weight: recWeight, reps: recReps, sets: recSets, est1RM: null, reason, badgeText, badgeType, isBw: true };
+    if (appState.deloadMode) {
+      recReps = Math.max(5, Math.round(recReps * 0.8));
+      recSets = Math.max(2, recSets - 1);
+      if (recWeight > 0) recWeight = roundStep(recWeight * 0.8, 2.5);
+      badgeText = "🛡 ディロード中（−20%・RPE 7.0目安で回復優先）";
+      badgeType = "keep";
+    }
+    return { weight: recWeight, reps: recReps, sets: recSets, est1RM: null, reason, badgeText, badgeType, isBw: true, defaultRpe: appState.deloadMode ? 7.0 : 8.0 };
   }
 
   // ウェイト種目
   if (history.length === 0) {
     const est1RM = bw * (ex.bwRatio || 0.6) * lvl.factor;
     const pct = isHyp ? 0.75 : 0.85;
-    const recWeight = Math.max(roundUnit, roundStep(est1RM * pct, roundUnit));
+    let recWeight = Math.max(roundUnit, roundStep(est1RM * pct, roundUnit));
+    let recSetsFirst = targetSets;
+    let badgeTextFirst = `✨ 初回基準セット（目標RPE 8.0 / 余力2回目安）`;
+    if (appState.deloadMode) {
+      recWeight = Math.max(roundUnit, roundStep(recWeight * 0.8, roundUnit));
+      recSetsFirst = Math.max(2, targetSets - 1);
+      badgeTextFirst = `🛡 ディロード中（−20%・RPE 7.0目安で回復優先）`;
+    }
     return {
       weight: recWeight,
       reps: targetReps,
-      sets: targetSets,
+      sets: recSetsFirst,
       est1RM,
       reason: `初回推定：体重 ${bw.toFixed(1)}kg × 種目係数(${ex.bwRatio}) × ${lvl.label}係数 → 推定1RM ${est1RM.toFixed(1)}kg（${isHyp ? "筋肥大75%" : "筋力85%"}）`,
-      badgeText: `✨ 初回基準セット（目標RPE 8.0 / 余力2回目安）`,
+      badgeText: badgeTextFirst,
       badgeType: "keep",
-      isBw: false
+      isBw: false,
+      defaultRpe: appState.deloadMode ? 7.0 : 8.0
     };
   }
 
@@ -2910,15 +3386,24 @@ function calculateRecommendation(exerciseId, goal, bodyWeight, dateStr) {
     badgeType = "keep";
   }
 
+  let finalW = Math.max(roundUnit, recWeight);
+  let finalSets = targetSets;
+  if (appState.deloadMode) {
+    finalW = Math.max(roundUnit, roundStep(finalW * 0.8, roundUnit));
+    finalSets = Math.max(2, targetSets - 1);
+    badgeText = `🛡 ディロード中（−20%・RPE 7.0目安で回復優先）`;
+    badgeType = "keep";
+  }
   return {
-    weight: Math.max(roundUnit, recWeight),
+    weight: finalW,
     reps: recReps,
-    sets: targetSets,
+    sets: finalSets,
     est1RM,
     reason: `前回(${last.date})：${last.maxWeight}kg × 平均${last.avgReps}回・平均RPE ${last.avgRpe.toFixed(1)} → 推定1RM ${est1RM.toFixed(1)}kg`,
     badgeText,
     badgeType,
-    isBw: false
+    isBw: false,
+    defaultRpe: appState.deloadMode ? 7.0 : 8.0
   };
 }
 
@@ -3230,7 +3715,7 @@ function renderComboRecommend(rebuild = true) {
           supersetGroup: ssGrp,
           memo: "",
           sets: Array.from({ length: setsCnt }, () => ({
-            weight: rec.weight, reps: rec.reps, rpe: 8.0, done: false, type: "normal"
+            weight: rec.weight, reps: rec.reps, rpe: appState.deloadMode ? 7.0 : 8.0, done: false, type: "normal"
           }))
         });
       });
@@ -3290,7 +3775,7 @@ function addExerciseWithAutoRecommend(exerciseId, switchToInput = false) {
   const sets = Array.from({ length: rec.sets }, () => ({
     weight: rec.weight,
     reps: rec.reps,
-    rpe: 8.0,
+    rpe: appState.deloadMode ? 7.0 : 8.0,
     done: false
   }));
   day.entries.push({
@@ -3337,7 +3822,7 @@ function applyTemplateToToday(tplId) {
       sets: Array.from({ length: rec.sets }, () => ({
         weight: rec.weight,
         reps: rec.reps,
-        rpe: 8.0,
+        rpe: appState.deloadMode ? 7.0 : 8.0,
         done: false
       }))
     });
@@ -3727,13 +4212,30 @@ function renderTodayEntries() {
     const card = document.createElement("div");
     card.className = "entry-card" + (allDone ? " all-done" : "") + (ssGrp ? ` ss-${ssGrp}` : "");
 
+    const prevDetail = getPreviousExerciseDetail(en.exerciseId, activeDate);
+    const prevSummaryHtml = prevDetail
+      ? `<div class="prev-summary-bar">⏪ 前回 (${prevDetail.date.slice(5).replace("-", "/")}): ${prevDetail.sets.map(ps => `${ps.weight}kg×${ps.reps}(R${ps.rpe})`).join(" / ")}</div>`
+      : "";
+
     let normalCounter = 0;
+    let workCounter = 0;
     const setsHtml = en.sets.map((s, sIdx) => {
       const sType = s.type || "normal";
       if (sType === "normal") normalCounter++;
+      let prevSetObj = null;
+      if (sType !== "warmup") {
+        if (prevDetail && prevDetail.sets[workCounter]) prevSetObj = prevDetail.sets[workCounter];
+        workCounter++;
+      }
       const badgeLbl = sType === "warmup" ? "W" : (sType === "drop" ? "D" : String(normalCounter));
       const isNextUp = ssProgress.nextSetMap.has(`${eIdx}_${sIdx}`);
       const rowCls = (s.done ? " done" : "") + (sType === "warmup" ? " is-warmup" : "") + (sType === "drop" ? " is-drop" : "") + (isNextUp ? " next-up" : "");
+      const prevLineHtml = prevSetObj
+        ? `<div class="set-prev-inline">
+             <span>前回: <strong>${prevSetObj.weight}kg × ${prevSetObj.reps}</strong> (RPE ${prevSetObj.rpe})</span>
+             <button type="button" class="set-prev-copy-btn" data-eprevcopy="${eIdx}_${sIdx}_${prevSetObj.weight}_${prevSetObj.reps}">前回コピー</button>
+           </div>`
+        : "";
       return `
         <div class="set-row${rowCls}">
           <button class="set-type-btn ${sType}" data-etype="${eIdx}_${sIdx}" title="タップで 通常 / W(アップ) / D(ドロップ) 切替">${badgeLbl}</button>
@@ -3750,6 +4252,7 @@ function renderTodayEntries() {
           </div>
           <button class="set-check-btn ${s.done ? "done" : ""}" data-edone="${eIdx}_${sIdx}" title="完了">✓</button>
           <button class="set-del-btn" data-esdel="${eIdx}_${sIdx}" title="削除">×</button>
+          ${prevLineHtml}
         </div>
       `;
     }).join("");
@@ -3773,10 +4276,14 @@ function renderTodayEntries() {
           <button class="action-btn btn-danger btn-small" data-edel="${eIdx}">削除</button>
         </div>
       </div>
+      ${prevSummaryHtml}
       <div class="entry-tools-row">
-        <button class="action-btn btn-secondary btn-small" data-ewarmup="${eIdx}" style="border-color:rgba(245,158,11,0.5);color:#fde68a;">🔥 アップ自動生成</button>
+        <button class="action-btn btn-secondary btn-small" data-ewarmup="${eIdx}" style="border-color:rgba(245,158,11,0.5);color:#fde68a;">🔥 アップ生成</button>
         <button class="action-btn btn-secondary btn-small" data-eaddset="${eIdx}">＋1セット</button>
-        <button class="action-btn btn-secondary btn-small" data-edrop="${eIdx}" style="border-color:rgba(167,139,250,0.55);color:#ddd6fe;">⬇ ドロップ追加</button>
+        <button class="action-btn btn-secondary btn-small" data-edrop="${eIdx}" style="border-color:rgba(167,139,250,0.55);color:#ddd6fe;">⬇ ドロップ</button>
+        <button class="action-btn btn-secondary btn-small" data-ehist="${en.exerciseId}" style="border-color:rgba(56,189,248,0.5);color:#7dd3fc;">📈 履歴</button>
+        <button class="action-btn btn-secondary btn-small" data-eswap="${eIdx}" style="border-color:rgba(20,184,166,0.55);color:#5eead4;">⇄ 代替</button>
+        <button class="action-btn btn-secondary btn-small" data-eplate="${eIdx}">🏋 プレート</button>
         <button class="action-btn btn-secondary btn-small" data-edup="${eIdx}" title="この種目を複製">📋 複製</button>
         <select class="ss-select" data-ess="${eIdx}" title="スーパーセットグループ">
           <option value="" ${ssGrp === "" ? "selected" : ""}>🔗 SSなし</option>
@@ -3811,6 +4318,22 @@ function renderTodayEntries() {
     };
     card.querySelector(`[data-ewarmup="${eIdx}"]`).onclick = () => generateWarmupSetsForEntry(eIdx);
     card.querySelector(`[data-edrop="${eIdx}"]`).onclick = () => addDropSetForEntry(eIdx);
+    card.querySelector(`[data-ehist="${en.exerciseId}"]`).onclick = () => openQuickHistoryModal(en.exerciseId);
+    card.querySelector(`[data-eswap="${eIdx}"]`).onclick = () => openSwapModal(eIdx);
+    card.querySelector(`[data-eplate="${eIdx}"]`).onclick = () => {
+      const mainS = en.sets.find(s => s.type !== "warmup") || en.sets[0];
+      openPlateModal(mainS ? Number(mainS.weight) || 60 : 60);
+    };
+    card.querySelectorAll("[data-eprevcopy]").forEach(btn => {
+      btn.onclick = () => {
+        const [ei, si, pw, pr] = btn.dataset.eprevcopy.split("_").map(Number);
+        pushUndo("前回記録コピー");
+        appState.workouts[activeDate].entries[ei].sets[si].weight = pw;
+        appState.workouts[activeDate].entries[ei].sets[si].reps = pr;
+        saveState(); renderAll();
+        showToast(`前回記録（${pw}kg × ${pr}）をコピーしました`, "info");
+      };
+    });
     card.querySelector(`[data-ess="${eIdx}"]`).onchange = (e) => {
       pushUndo("スーパーセット設定");
       appState.workouts[activeDate].entries[eIdx].supersetGroup = e.target.value;
@@ -3869,6 +4392,9 @@ function renderTodayEntries() {
         const nowDone = !targetSet.done;
         targetSet.done = nowDone;
         saveState(); renderAll();
+        if (nowDone && !sessionTimerRunning && (Number(dayObj.durationSec) || 0) === 0) {
+          startSessionTimer();
+        }
         if (nowDone && shouldAutoStartTimerOnCheck(dayObj, ei, si)) {
           startTimer();
           showToast("⏱ セット完了 → インターバルタイマー自動スタート！", "info");
@@ -3962,6 +4488,242 @@ function openGuideModal(exerciseId) {
 function closeGuideModal() {
   currentGuideExId = null;
   document.getElementById("guideModal").classList.remove("open");
+}
+
+
+// =========================================================================
+// v6: 種目代替（スワップ）・クイック履歴・バーベル プレート計算機
+// =========================================================================
+function openSwapModal(eIdx) {
+  const day = appState.workouts[activeDate];
+  if (!day || !day.entries[eIdx]) return;
+  swappingEntryIdx = eIdx;
+  const curEntry = day.entries[eIdx];
+  const pInfo = PARTS[curEntry.part] || PARTS.chest;
+  document.getElementById("swapModalTitle").textContent = `⇄ 「${curEntry.exerciseName}」を代替`;
+  document.getElementById("swapModalSub").textContent = `同じ部位（${pInfo.label}）の別種目を選択すると、自動重量セット付きで差し替えます。`;
+  document.getElementById("inpSwapSearch").value = "";
+  renderSwapCandidates();
+  document.getElementById("swapModal").classList.add("open");
+}
+
+function renderSwapCandidates() {
+  const listEl = document.getElementById("swapCandidateList");
+  const day = appState.workouts[activeDate];
+  if (swappingEntryIdx === null || !day || !day.entries[swappingEntryIdx]) return;
+  const curEntry = day.entries[swappingEntryIdx];
+  const curEx = getExerciseById(curEntry.exerciseId);
+  const q = (document.getElementById("inpSwapSearch").value || "").trim().toLowerCase();
+  const bw = parseFloat(document.getElementById("inpBodyWeight").value) || appState.profile.weight || 75.0;
+
+  let cands = appState.exercises.filter(e => e.part === curEntry.part && e.id !== curEntry.exerciseId);
+  if (q) {
+    cands = cands.filter(e => e.name.toLowerCase().includes(q) || (e.equipment || "").toLowerCase().includes(q));
+  }
+  cands.sort((a, b) => {
+    const sameTypeA = curEx && a.type === curEx.type ? 0 : 1;
+    const sameTypeB = curEx && b.type === curEx.type ? 0 : 1;
+    return sameTypeA - sameTypeB;
+  });
+
+  if (cands.length === 0) {
+    listEl.innerHTML = `<p class="note" style="text-align:center;margin:10px 0;">該当する代替種目がありません。</p>`;
+    return;
+  }
+
+  listEl.innerHTML = "";
+  cands.forEach(ex => {
+    const rec = calculateRecommendation(ex.id, selectedGoal, bw, activeDate);
+    const wTxt = rec.isBw ? (rec.weight > 0 ? `+${rec.weight}kg` : "自重") : `${rec.weight}kg`;
+    const div = document.createElement("div");
+    div.className = "swap-item";
+    div.innerHTML = `
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:800;color:var(--text);">${escHtml(ex.name)}</div>
+        <div style="font-size:11px;color:var(--text-muted);">${escHtml(ex.equipment)}・${escHtml(ex.type)} ｜ 推奨 ${wTxt}×${rec.reps}×${rec.sets}set</div>
+      </div>
+      <span class="action-btn btn-teal btn-small" style="pointer-events:none;">選択</span>
+    `;
+    div.onclick = () => {
+      pushUndo(`種目代替(${curEntry.exerciseName}→${ex.name})`);
+      const target = appState.workouts[activeDate].entries[swappingEntryIdx];
+      target.exerciseId = ex.id;
+      target.exerciseName = ex.name;
+      target.part = ex.part;
+      target.sets = Array.from({ length: rec.sets }, () => ({
+        weight: rec.weight, reps: rec.reps, rpe: rec.defaultRpe || 8.0, done: false, type: "normal"
+      }));
+      closeSwapModal();
+      saveState(); renderAll();
+      showToast(`⇄ 「${ex.name}」へ代替しました！`);
+    };
+    listEl.appendChild(div);
+  });
+}
+
+function closeSwapModal() {
+  swappingEntryIdx = null;
+  document.getElementById("swapModal").classList.remove("open");
+}
+
+function openQuickHistoryModal(exerciseId) {
+  const ex = getExerciseById(exerciseId);
+  if (!ex) return;
+  document.getElementById("histModalTitle").textContent = `📈 ${ex.name} の履歴`;
+  const hist = getExerciseHistory(exerciseId);
+  const sumEl = document.getElementById("histModalSummary");
+  const logEl = document.getElementById("histModalLogList");
+
+  if (hist.length === 0) {
+    sumEl.innerHTML = `<div class="stat-pill" style="grid-column:span 2;"><div class="lbl">履歴</div><div class="val" style="font-size:13px;color:var(--text-muted);">この種目の過去記録はまだありません</div></div>`;
+    logEl.innerHTML = "";
+  } else {
+    const bestW = Math.max(...hist.map(h => h.maxWeight));
+    const best1RM = Math.max(...hist.map(h => h.max1RM));
+    sumEl.innerHTML = `
+      <div class="stat-pill"><div class="lbl">自己ベスト最大重量</div><div class="val" style="color:var(--accent);">${bestW} kg</div></div>
+      <div class="stat-pill"><div class="lbl">自己ベスト推定1RM</div><div class="val" style="color:var(--gold);">${best1RM.toFixed(1)} kg</div></div>
+    `;
+    const dates = Object.keys(appState.workouts).sort((a, b) => b.localeCompare(a));
+    const rows = [];
+    for (const d of dates) {
+      const day = appState.workouts[d];
+      const matched = (day?.entries || []).filter(en => en.exerciseId === exerciseId);
+      if (matched.length > 0) {
+        const setStrs = matched.flatMap(en => en.sets.filter(s => s.type !== "warmup").map(s => `${s.weight}kg×${s.reps}(R${s.rpe ?? 8})`));
+        if (setStrs.length > 0) {
+          rows.push(`<div style="background:var(--surface-2);border:1px solid var(--border);border-radius:9px;padding:7px 9px;margin-bottom:6px;font-size:11px;">
+            <strong style="color:var(--gold);">${d}</strong><br>
+            <span style="color:#e2e8f0;">${setStrs.join(" / ")}</span>
+          </div>`);
+        }
+      }
+      if (rows.length >= 10) break;
+    }
+    logEl.innerHTML = rows.join("");
+  }
+
+  // ミニ推移グラフ描画
+  const canvas = document.getElementById("canvasQuickHistChart");
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = "#0b132b";
+  ctx.fillRect(0, 0, W, H);
+
+  const asc = [...hist].reverse().slice(-12);
+  if (asc.length === 0) {
+    ctx.fillStyle = "#94a3b8"; ctx.font = "700 13px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("記録が追加されるとグラフが表示されます", W / 2, H / 2);
+  } else {
+    const rms = asc.map(h => h.max1RM);
+    const ws = asc.map(h => h.maxWeight);
+    const allV = [...rms, ...ws];
+    const minV = Math.max(0, Math.floor((Math.min(...allV) - 5) / 5) * 5);
+    const maxV = Math.ceil((Math.max(...allV) + 5) / 5) * 5;
+    const span = Math.max(10, maxV - minV);
+    const padL = 44, padR = 16, padT = 22, padB = 26, pW = W - padL - padR, pH = H - padT - padB;
+    const gx = (i) => asc.length === 1 ? padL + pW / 2 : padL + (pW * i) / (asc.length - 1);
+    const gy = (v) => padT + pH * (1 - (v - minV) / span);
+
+    ctx.font = "700 10px sans-serif";
+    for (let i = 0; i <= 3; i++) {
+      const v = minV + (span * i) / 3, y = gy(v);
+      ctx.strokeStyle = "rgba(58,80,107,0.45)"; ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W - padR, y); ctx.stroke();
+      ctx.fillStyle = "#94a3b8"; ctx.textAlign = "right"; ctx.textBaseline = "middle";
+      ctx.fillText(`${Math.round(v)}kg`, padL - 5, y);
+    }
+    const drawL = (arr, col) => {
+      ctx.strokeStyle = col; ctx.lineWidth = 2.4; ctx.beginPath();
+      arr.forEach((v, i) => { if (i === 0) ctx.moveTo(gx(i), gy(v)); else ctx.lineTo(gx(i), gy(v)); });
+      ctx.stroke();
+      arr.forEach((v, i) => { ctx.beginPath(); ctx.arc(gx(i), gy(v), 3.5, 0, Math.PI * 2); ctx.fillStyle = col; ctx.fill(); });
+    };
+    drawL(ws, "#38bdf8");
+    drawL(rms, "#facc15");
+    ctx.textAlign = "center"; ctx.textBaseline = "top"; ctx.fillStyle = "#94a3b8";
+    const step = Math.max(1, Math.ceil(asc.length / 5));
+    asc.forEach((h, i) => { if (i === 0 || i === asc.length - 1 || i % step === 0) ctx.fillText(h.date.slice(5).replace("-", "/"), gx(i), padT + pH + 6); });
+    ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    ctx.fillStyle = "#facc15"; ctx.fillRect(padL, 8, 10, 4); ctx.fillStyle = "#f1f5f9"; ctx.fillText("推定1RM", padL + 14, 10);
+    ctx.fillStyle = "#38bdf8"; ctx.fillRect(padL + 74, 8, 10, 4); ctx.fillStyle = "#f1f5f9"; ctx.fillText("最大重量", padL + 88, 10);
+  }
+
+  document.getElementById("historyModal").classList.add("open");
+}
+
+function closeQuickHistoryModal() {
+  document.getElementById("historyModal").classList.remove("open");
+}
+
+const PLATE_SPECS = [
+  { w: 25,   color: "#dc2626", h: 58, width: 22 },
+  { w: 20,   color: "#2563eb", h: 56, width: 20 },
+  { w: 15,   color: "#ca8a04", h: 50, width: 18 },
+  { w: 10,   color: "#16a34a", h: 44, width: 16 },
+  { w: 5,    color: "#64748b", h: 36, width: 15 },
+  { w: 2.5,  color: "#0f172a", h: 30, width: 14 },
+  { w: 1.25, color: "#475569", h: 24, width: 13 }
+];
+
+function openPlateModal(initialWeight = 60) {
+  document.getElementById("inpPlateTarget").value = initialWeight;
+  document.querySelectorAll("#plateBarChips .alarm-chip").forEach(b => {
+    b.classList.toggle("active", Number(b.dataset.barw) === Number(appState.plateBarWeight));
+  });
+  renderPlateCalculator();
+  document.getElementById("plateModal").classList.add("open");
+}
+
+function closePlateModal() {
+  document.getElementById("plateModal").classList.remove("open");
+}
+
+function renderPlateCalculator() {
+  const target = Math.max(0, parseFloat(document.getElementById("inpPlateTarget").value) || 0);
+  const barW = Number(appState.plateBarWeight) || 0;
+  const perSideRaw = (target - barW) / 2;
+  const lbl = document.getElementById("platePerSideLbl");
+  const vis = document.getElementById("plateBarVisual");
+  const chips = document.getElementById("plateListChips");
+  const note = document.getElementById("plateRemainderNote");
+
+  if (perSideRaw <= 0) {
+    lbl.textContent = "片側: 0kg（プレート不要）";
+    vis.innerHTML = `<div class="plate-sleeve"></div><div class="plate-collar"></div><span style="font-size:12px;color:var(--text-muted);margin-left:8px;">バーのみ（${barW}kg）</span>`;
+    chips.innerHTML = `<span class="plate-chip">プレート不要</span>`;
+    note.textContent = target < barW ? `※目標重量(${target}kg)がバー重量(${barW}kg)を下回っています。` : "";
+    return;
+  }
+
+  lbl.textContent = `片側: ${perSideRaw.toFixed(2).replace(/\.00$/, "")} kg`;
+  let rem = Math.round(perSideRaw * 100) / 100;
+  const used = [];
+  PLATE_SPECS.forEach(sp => {
+    const cnt = Math.floor((rem + 0.001) / sp.w);
+    if (cnt > 0) {
+      used.push({ ...sp, count: cnt });
+      rem = Math.round((rem - cnt * sp.w) * 100) / 100;
+    }
+  });
+
+  let discsHtml = `<div class="plate-sleeve"></div><div class="plate-collar"></div>`;
+  used.forEach(u => {
+    for (let i = 0; i < u.count; i++) {
+      discsHtml += `<div class="plate-disc" style="background:${u.color};height:${u.h}px;width:${u.width}px;">${u.w}</div>`;
+    }
+  });
+  discsHtml += `<div class="plate-sleeve" style="width:18px;"></div>`;
+  vis.innerHTML = discsHtml;
+
+  chips.innerHTML = used.length === 0
+    ? `<span class="plate-chip">該当プレートなし</span>`
+    : used.map(u => `<span class="plate-chip" style="border-color:${u.color};">${u.w}kg × <strong>${u.count}枚</strong></span>`).join("");
+
+  const actualTotal = barW + used.reduce((s, u) => s + u.w * u.count, 0) * 2;
+  note.textContent = rem > 0.01
+    ? `※最小1.25kgプレート構成での実重量は ${actualTotal}kg です（片側端数 ${rem}kg）。`
+    : `合計 ${actualTotal}kg（バー ${barW}kg ＋ 両側 ${(actualTotal - barW)}kg）`;
 }
 
 // =========================================================================
@@ -4246,7 +5008,7 @@ function renderCalendarDetail() {
   let html = `
     <div class="summary-grid">
       <div class="stat-pill"><div class="lbl">総負荷 / 平均RPE</div><div class="val">${st.volume.toLocaleString()} kg${st.avgRpe ? ` / RPE ${st.avgRpe}` : ""}</div></div>
-      <div class="stat-pill"><div class="lbl">当日体重 / セット</div><div class="val">${day.bodyWeight ? day.bodyWeight + " kg" : "-"} / ${st.doneSets}/${st.setsCount}set</div></div>
+      <div class="stat-pill"><div class="lbl">当日体重 / 所要時間</div><div class="val">${day.bodyWeight ? day.bodyWeight + " kg" : "-"} / ${day.durationSec ? formatDurationJa(day.durationSec) : `${st.doneSets}/${st.setsCount}set`}</div></div>
     </div>
   `;
   if (day.memo) html += `<p class="note" style="background:var(--surface-2);padding:8px 10px;border-radius:8px;color:var(--text);">📝 ${escHtml(day.memo)}</p>`;
@@ -4279,7 +5041,7 @@ function renderRecentHistory() {
     item.innerHTML = `
       <div>
         <div style="font-size:13px;font-weight:800;margin-bottom:3px;">${d} ${tags}</div>
-        <div style="font-size:11px;color:var(--text-muted);">${st.entriesCount}種目・${st.setsCount}set${st.avgRpe ? `・平均RPE ${st.avgRpe}` : ""}</div>
+        <div style="font-size:11px;color:var(--text-muted);">${st.entriesCount}種目・${st.setsCount}set${st.avgRpe ? `・平均RPE ${st.avgRpe}` : ""}${appState.workouts[d].durationSec ? `・⏱${formatDurationJa(appState.workouts[d].durationSec)}` : ""}</div>
       </div>
       <div style="text-align:right;">
         <div style="font-size:14px;font-weight:900;color:var(--gold);">${st.volume.toLocaleString()} kg</div>
@@ -4331,7 +5093,7 @@ function renderRemindTab() {
 
   const rem = appState.reminder;
   document.getElementById("inpRemDate").value = rem.nextDate || "";
-  document.getElementById("inpRemTime").value = rem.nextTime || "19:00";
+  setRemTimeSelectors(rem.nextTime || "19:00");
   document.getElementById("inpRemNote").value = rem.note || "";
   const pSet = new Set(rem.parts || []);
   document.querySelectorAll("#remPartChips .sel-chip").forEach(c => c.classList.toggle("active", pSet.has(c.dataset.rpart)));
@@ -4377,23 +5139,77 @@ function autoSuggestNextWorkout() {
   showToast(`次回 ${nextDate}（${chosenParts.map(k => PARTS[k].label).join("・")}）を提案しました！`, "info");
 }
 
+function initRemTimeSelectors() {
+  const hSel = document.getElementById("selRemHour");
+  const mSel = document.getElementById("selRemMin");
+  if (!hSel || !mSel) return;
+  hSel.innerHTML = Array.from({ length: 24 }, (_, h) => {
+    const s = String(h).padStart(2, "0");
+    return `<option value="${s}">${s}時</option>`;
+  }).join("");
+  mSel.innerHTML = Array.from({ length: 12 }, (_, i) => {
+    const s = String(i * 5).padStart(2, "0");
+    return `<option value="${s}">${s}分</option>`;
+  }).join("");
+}
+
+function getRemTimeFromSelectors() {
+  const h = document.getElementById("selRemHour")?.value || "19";
+  const m = document.getElementById("selRemMin")?.value || "00";
+  return `${h}:${m}`;
+}
+
+function setRemTimeSelectors(timeStr) {
+  const [rawH, rawM] = (timeStr || "19:00").split(":");
+  const h = String(Math.max(0, Math.min(23, parseInt(rawH, 10) || 19))).padStart(2, "0");
+  const mNum = Math.round((parseInt(rawM, 10) || 0) / 5) * 5;
+  const m = String(mNum >= 60 ? 55 : Math.max(0, mNum)).padStart(2, "0");
+  const hSel = document.getElementById("selRemHour");
+  const mSel = document.getElementById("selRemMin");
+  if (hSel) hSel.value = h;
+  if (mSel) mSel.value = m;
+  const cur = `${h}:${m}`;
+  document.querySelectorAll("#remTimeQuickChips .time-quick-chip").forEach(c => {
+    c.classList.toggle("active", c.dataset.qtime === cur);
+  });
+}
+
+function buildReminderEventFields() {
+  const dateVal = document.getElementById("inpRemDate").value || appState.reminder.nextDate;
+  if (!dateVal) return null;
+  const timeVal = getRemTimeFromSelectors();
+  const parts = Array.from(document.querySelectorAll("#remPartChips .sel-chip.active")).map(c => c.dataset.rpart);
+  const partsStr = (parts.length ? parts : (appState.reminder.parts || [])).map(k => PARTS[k].label).join("・") || "全身";
+  const noteVal = document.getElementById("inpRemNote").value.trim() || appState.reminder.note || "IronFlow からのトレーニングリマインダー";
+  const [hh, mm] = timeVal.split(":");
+  const startDt = new Date(`${dateVal}T${hh}:${mm}:00`);
+  const endDt = new Date(startDt.getTime() + 60 * 60 * 1000);
+  const fmt = (dt) => `${dt.getFullYear()}${String(dt.getMonth()+1).padStart(2,"0")}${String(dt.getDate()).padStart(2,"0")}T${String(dt.getHours()).padStart(2,"0")}${String(dt.getMinutes()).padStart(2,"0")}00`;
+  return { dateVal, timeVal, partsStr, noteVal, startStr: fmt(startDt), endStr: fmt(endDt) };
+}
+
+function openGoogleCalendar() {
+  const ev = buildReminderEventFields();
+  if (!ev) { showToast("先に次回予定日を選択してください", "error"); return; }
+  const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`💪 筋トレ（${ev.partsStr}）`)}&dates=${ev.startStr}/${ev.endStr}&details=${encodeURIComponent(ev.noteVal)}`;
+  window.open(url, "_blank", "noopener");
+  showToast("Googleカレンダーの予定作成画面を開きました", "info");
+}
+
 function downloadIcsFile() {
-  const rem = appState.reminder;
-  if (!rem.nextDate) { showToast("先に次回予定日を保存してください", "error"); return; }
-  const dc = rem.nextDate.replace(/-/g, ""), [hh, mm] = (rem.nextTime || "19:00").split(":");
-  const startStr = `${dc}T${hh}${mm}00`, endStr = `${dc}T${String((parseInt(hh, 10) + 1) % 24).padStart(2, "0")}${mm}00`;
-  const partsStr = (rem.parts || []).map(k => PARTS[k].label).join("・") || "全身";
+  const ev = buildReminderEventFields();
+  if (!ev) { showToast("先に次回予定日を選択してください", "error"); return; }
   const ics = [
-    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//IronFlowV5//JP", "BEGIN:VEVENT",
-    `DTSTART:${startStr}`, `DTEND:${endStr}`, `SUMMARY:💪 筋トレ（${partsStr}）`,
-    `DESCRIPTION:${(rem.note || "IronFlow からのトレーニングリマインダー").replace(/\n/g, "\\n")}`,
+    "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//IronFlowV6//JP", "BEGIN:VEVENT",
+    `DTSTART:${ev.startStr}`, `DTEND:${ev.endStr}`, `SUMMARY:💪 筋トレ（${ev.partsStr}）`,
+    `DESCRIPTION:${ev.noteVal.replace(/\n/g, "\\n")}`,
     "BEGIN:VALARM", "TRIGGER:-PT30M", "ACTION:DISPLAY", "DESCRIPTION:筋トレ30分前です！", "END:VALARM",
     "END:VEVENT", "END:VCALENDAR"
   ].join("\r\n");
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
-  a.download = `workout_${rem.nextDate}.ics`; a.click();
-  showToast(".ics カレンダーファイルをダウンロードしました");
+  a.download = `workout_${ev.dateVal}.ics`; a.click();
+  showToast(".icsをダウンロードしました。開いてカレンダーに追加してください");
 }
 
 // =========================================================================
@@ -4673,7 +5489,8 @@ function generateWorkoutReportImage(dateStr) {
 
   ctx.font = `700 22px ${fontBase}`;
   ctx.fillStyle = "#e2e8f0";
-  ctx.fillText(`${dateStr}   ｜   IronFlow v5`, W / 2, 104);
+  const durTxt = day.durationSec ? `   ｜   所要時間 ${formatDurationJa(day.durationSec)}` : "";
+  ctx.fillText(`${dateStr}${durTxt}   ｜   IronFlow v6`, W / 2, 104);
 
   // 実施部位バッジ
   const partW = 104, partGap = 12;
@@ -4810,7 +5627,7 @@ function generateWorkoutReportImage(dateStr) {
 
   // フッター
   ctx.textAlign = "center"; ctx.font = `700 15px ${fontBase}`; ctx.fillStyle = "#64748b";
-  ctx.fillText("Generated by IronFlow v5", W / 2, H - 26);
+  ctx.fillText("Generated by IronFlow v6", W / 2, H - 26);
 
   return canvas.toDataURL("image/png");
 }
@@ -4885,6 +5702,54 @@ function renderWeeklyAndGrowthInsights() {
 
   if (badgeEl) badgeEl.textContent = `直近7日 ${thisDays} / ${targetFreq}回目標 (${freqPct}%)`;
   if (barEl) barEl.style.width = `${freqPct}%`;
+
+  // v6: 部位別 週間セット数メーター（最適ゾーン表示）
+  const meterEl = document.getElementById("weeklyPartMeters");
+  if (meterEl) {
+    const partSets7d = Object.fromEntries(PART_KEYS.map(k => [k, 0]));
+    Object.keys(appState.workouts).forEach(d => {
+      if (d < thisWeekStart || d > today) return;
+      const day = appState.workouts[d];
+      if (!day || !day.entries) return;
+      day.entries.forEach(en => {
+        if (partSets7d[en.part] === undefined) return;
+        partSets7d[en.part] += (en.sets || []).filter(s => s.type !== "warmup").length;
+      });
+    });
+    const majorSet = new Set(["chest", "back", "legs"]);
+    meterEl.innerHTML = PART_KEYS.map(k => {
+      const p = PARTS[k];
+      const sets = partSets7d[k];
+      const optMin = majorSet.has(k) ? 10 : 8;
+      const optMax = majorSet.has(k) ? 20 : 16;
+      const scaleMax = majorSet.has(k) ? 24 : 20;
+      const fillPct = Math.min(100, Math.round((sets / scaleMax) * 100));
+      const zoneLeft = Math.round((optMin / scaleMax) * 100);
+      const zoneW = Math.round(((optMax - optMin) / scaleMax) * 100);
+      let statusTxt = "", barCol = "#38bdf8";
+      if (sets < optMin) {
+        statusTxt = `あと${optMin - sets}setで最適`;
+        barCol = "#38bdf8";
+      } else if (sets <= optMax) {
+        statusTxt = `✅ 最適ゾーン (${optMin}〜${optMax})`;
+        barCol = "#22c55e";
+      } else {
+        statusTxt = `⚡ 高ボリューム (${optMax}超)`;
+        barCol = "#f59e0b";
+      }
+      return `
+        <div class="weekly-meter-item">
+          <div class="weekly-meter-head">
+            <span><span class="part-tag ${k}">${p.label}</span> <strong>${sets} set</strong></span>
+            <span style="font-size:11px;color:${barCol};">${statusTxt}</span>
+          </div>
+          <div class="weekly-meter-track">
+            <div class="weekly-meter-optzone" style="left:${zoneLeft}%;width:${zoneW}%;"></div>
+            <div class="weekly-meter-fill" style="width:${fillPct}%;background:${barCol};"></div>
+          </div>
+        </div>`;
+    }).join("");
+  }
 
   gridEl.innerHTML = `
     <div class="stat-pill">
@@ -5154,7 +6019,7 @@ function buildShareText(dateStr) {
   const lines = [
     `💪 筋トレ記録（${dateStr}）`,
     `部位：${st.parts.map(k => PARTS[k].label).join("・")} ｜ 総負荷：${st.volume.toLocaleString()}kg` +
-      (st.avgRpe ? ` ｜ 平均RPE：${st.avgRpe}` : "") + (day.bodyWeight ? ` ｜ 体重：${day.bodyWeight}kg` : ""),
+      (st.avgRpe ? ` ｜ 平均RPE：${st.avgRpe}` : "") + (day.durationSec ? ` ｜ 所要時間：${formatDurationJa(day.durationSec)}` : "") + (day.bodyWeight ? ` ｜ 体重：${day.bodyWeight}kg` : ""),
     ""
   ];
   day.entries.forEach(en => {
@@ -5222,7 +6087,7 @@ function loadSampleData() {
       ]
     },
     [t]: {
-      date: t, bodyWeight: 74.6, memo: "ベンチ70kg PR更新！スーパーセット＆ドロップで追い込み",
+      date: t, bodyWeight: 74.6, durationSec: 3120, memo: "ベンチ70kg PR更新！スーパーセット＆ドロップで追い込み",
       entries: [
         { id: genId("e"), exerciseId: "ex_bench", exerciseName: "ベンチプレス", part: "chest", goal: "hypertrophy", memo: "Wセットで肩の調子良好", sets: [{ weight: 20, reps: 10, rpe: 6.0, done: true, type: "warmup" }, { weight: 45, reps: 6, rpe: 6.0, done: true, type: "warmup" }, { weight: 70, reps: 10, rpe: 8.0, done: true, type: "normal" }, { weight: 70, reps: 10, rpe: 8.5, done: true, type: "normal" }, { weight: 70, reps: 10, rpe: 9.0, done: true, type: "normal" }, { weight: 55, reps: 10, rpe: 9.5, done: true, type: "drop" }] },
         { id: genId("e"), exerciseId: "ex_cable_pushdown", exerciseName: "ケーブルプレスダウン", part: "arms", goal: "hypertrophy", supersetGroup: "A", memo: "", sets: [{ weight: 25, reps: 12, rpe: 8.0, done: true, type: "normal" }, { weight: 25, reps: 12, rpe: 8.5, done: true, type: "normal" }, { weight: 25, reps: 12, rpe: 9.0, done: true, type: "normal" }] },
@@ -5239,9 +6104,18 @@ function loadSampleData() {
 // =========================================================================
 // 全体レンダリング＆イベント初期化
 // =========================================================================
+function renderDeloadUI() {
+  const chk = document.getElementById("chkDeloadMode");
+  const ban = document.getElementById("deloadActiveBanner");
+  if (chk) chk.checked = !!appState.deloadMode;
+  if (ban) ban.style.display = appState.deloadMode ? "flex" : "none";
+}
+
 function renderAll() {
   updateUndoBtn();
   applyGymFocusModeUI();
+  renderDeloadUI();
+  updateSessionTimerUI();
   renderBackupStatusUI();
   renderTimerOptsUI();
   renderReminderHeaderAndBanner();
@@ -5302,7 +6176,9 @@ function initEvents() {
   // 日付・体重・全体メモ・目的切替（記録タブ）
   document.getElementById("inpWorkoutDate").onchange = (e) => {
     if (!e.target.value) return;
+    if (sessionTimerRunning) pauseSessionTimer();
     activeDate = e.target.value;
+    updateSessionTimerUI();
     renderTodayEntries();
     updateRecommendationAndApply(true);
     document.getElementById("txtSharePreview").value = buildShareText(activeDate);
@@ -5457,7 +6333,7 @@ function initEvents() {
         goal: selectedGoal,
         memo: "",
         sets: Array.from({ length: setsCnt }, () => ({
-          weight: rec.weight, reps: rec.reps, rpe: 8.0, done: false, type: "normal"
+          weight: rec.weight, reps: rec.reps, rpe: appState.deloadMode ? 7.0 : 8.0, done: false, type: "normal"
         }))
       });
     });
@@ -5519,7 +6395,7 @@ function initEvents() {
     day.bodyWeight = parseFloat(document.getElementById("inpBodyWeight").value) || appState.profile.weight;
     day.entries.push({
       id: genId("ent"), exerciseId: ex.id, exerciseName: ex.name, part: ex.part, goal: selectedGoal, memo: "",
-      sets: Array.from({ length: sCnt }, () => ({ weight: w, reps: r, rpe: 8.0, done: false }))
+      sets: Array.from({ length: sCnt }, () => ({ weight: w, reps: r, rpe: appState.deloadMode ? 7.0 : 8.0, done: false }))
     });
     saveState(); renderAll();
     showToast(`${ex.name}（${w}kg × ${r} × ${sCnt}set）を追加しました`);
@@ -5612,26 +6488,28 @@ function initEvents() {
   // リマインド
   document.querySelectorAll("#remPartChips .sel-chip").forEach(c => { c.onclick = () => c.classList.toggle("active"); });
   document.getElementById("btnAutoSuggestNext").onclick = autoSuggestNextWorkout;
+  initRemTimeSelectors();
+  ["selRemHour", "selRemMin"].forEach(id => {
+    document.getElementById(id).onchange = () => {
+      const cur = getRemTimeFromSelectors();
+      document.querySelectorAll("#remTimeQuickChips .time-quick-chip").forEach(c => {
+        c.classList.toggle("active", c.dataset.qtime === cur);
+      });
+    };
+  });
+  document.querySelectorAll("#remTimeQuickChips .time-quick-chip").forEach(btn => {
+    btn.onclick = () => setRemTimeSelectors(btn.dataset.qtime);
+  });
   document.getElementById("btnSaveReminder").onclick = () => {
     const nextDate = document.getElementById("inpRemDate").value;
     if (!nextDate) { showToast("次回予定日を選択してください", "error"); return; }
     const parts = Array.from(document.querySelectorAll("#remPartChips .sel-chip.active")).map(c => c.dataset.rpart);
     pushUndo("リマインド保存");
-    appState.reminder = { nextDate, nextTime: document.getElementById("inpRemTime").value || "19:00", parts, note: document.getElementById("inpRemNote").value.trim() };
+    appState.reminder = { nextDate, nextTime: getRemTimeFromSelectors(), parts, note: document.getElementById("inpRemNote").value.trim() };
     saveState(); renderAll(); showToast("次回リマインドを保存しました！");
   };
+  document.getElementById("btnOpenGoogleCal").onclick = openGoogleCalendar;
   document.getElementById("btnDownloadIcs").onclick = downloadIcsFile;
-  document.getElementById("btnTestNotify").onclick = async () => {
-    if (!("Notification" in window)) { showToast("このブラウザは通知未対応です", "error"); return; }
-    try {
-      const perm = await Notification.requestPermission();
-      if (perm === "granted") {
-        const r = appState.reminder, ps = (r.parts || []).map(k => PARTS[k].label).join("・") || "筋トレ";
-        new Notification("💪 IronFlow v5", { body: r.nextDate ? `次回予定：${r.nextDate} ${r.nextTime || ""}（${ps}）` : "通知テスト成功！" });
-        showToast("テスト通知を送信しました");
-      } else showToast("通知が許可されませんでした", "error");
-    } catch (e) { showToast("通知送信に失敗しました", "error"); }
-  };
 
   // 分析・出力
   document.getElementById("selChartExercise").onchange = drawExerciseChart;
@@ -5720,6 +6598,62 @@ function initEvents() {
   document.getElementById("btnConfirmCancel").onclick = closeConfirmModal;
   document.getElementById("btnConfirmOk").onclick = () => { if (typeof confirmCallback === "function") confirmCallback(); closeConfirmModal(); };
   document.getElementById("confirmModal").addEventListener("click", e => { if (e.target.id === "confirmModal") closeConfirmModal(); });
+
+  // v6: ワークアウト実測タイマー
+  document.getElementById("btnSessionToggle").onclick = () => {
+    if (sessionTimerRunning) pauseSessionTimer();
+    else startSessionTimer();
+  };
+  document.getElementById("btnSessionReset").onclick = () => {
+    openConfirmModal("所要時間のリセット", "本日のトレーニング計測時間を 00:00:00 にリセットしますか？", () => {
+      resetSessionTimer();
+      showToast("計測時間をリセットしました", "info");
+    }, "リセット");
+  };
+
+  // v6: ディロード週モード切替
+  document.getElementById("chkDeloadMode").onchange = (e) => {
+    appState.deloadMode = e.target.checked;
+    saveState();
+    renderDeloadUI();
+    updateRecommendationAndApply(true);
+    renderMultiExChecklist();
+    renderComboRecommend(false);
+    showToast(appState.deloadMode ? "🛡 ディロード週モードON（推奨重量 −20% / RPE7.0）" : "通常トレーニングモードに戻しました", "info");
+  };
+
+  // v6: プレート計算機
+  document.getElementById("btnOpenPlateFromInput").onclick = () => {
+    openPlateModal(parseFloat(document.getElementById("inpWeight").value) || 60);
+  };
+  document.querySelectorAll("#plateBarChips .alarm-chip").forEach(btn => {
+    btn.onclick = () => {
+      appState.plateBarWeight = Number(btn.dataset.barw);
+      saveState();
+      document.querySelectorAll("#plateBarChips .alarm-chip").forEach(b => b.classList.toggle("active", b === btn));
+      renderPlateCalculator();
+    };
+  });
+  document.getElementById("inpPlateTarget").oninput = renderPlateCalculator;
+  document.getElementById("btnPlateMinus").onclick = () => {
+    const el = document.getElementById("inpPlateTarget");
+    el.value = Math.max(0, (parseFloat(el.value) || 0) - 2.5);
+    renderPlateCalculator();
+  };
+  document.getElementById("btnPlatePlus").onclick = () => {
+    const el = document.getElementById("inpPlateTarget");
+    el.value = Math.min(400, (parseFloat(el.value) || 0) + 2.5);
+    renderPlateCalculator();
+  };
+  document.getElementById("btnClosePlate").onclick = closePlateModal;
+  document.getElementById("plateModal").addEventListener("click", e => { if (e.target.id === "plateModal") closePlateModal(); });
+
+  // v6: 種目代替（スワップ）＆クイック履歴モーダル
+  document.getElementById("inpSwapSearch").oninput = renderSwapCandidates;
+  document.getElementById("btnCloseSwap").onclick = closeSwapModal;
+  document.getElementById("swapModal").addEventListener("click", e => { if (e.target.id === "swapModal") closeSwapModal(); });
+  document.getElementById("btnCloseHist").onclick = closeQuickHistoryModal;
+  document.getElementById("historyModal").addEventListener("click", e => { if (e.target.id === "historyModal") closeQuickHistoryModal(); });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
